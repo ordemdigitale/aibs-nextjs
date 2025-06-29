@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins, Karla } from "next/font/google";
 import "./globals.css";
-//import { TopBar, Navbar } from '@/components/layout/header'
-//import Footer from '@/components/layout/footer/Footer'
+import { TopBar, Navbar } from '@/components/layout/header';
+import Footer from '@/components/layout/footer/Footer';
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,10 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="en">
       <body
         className={`${poppins.variable} ${karla.variable} antialiased`}
       >
+        <TopBar />
         {children}
       </body>
     </html>
