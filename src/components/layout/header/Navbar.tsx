@@ -1,16 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import logo from '../../../../public/aibs_logo.png'
 import { usePathname } from 'next/navigation'
 import { FiMenu, FiX } from 'react-icons/fi'
 
 const navLinks = [
   { name: 'L\'\école',
-    href: '/',
+    href: '#',
     subLinks: [
       { name: 'Découvrez', href: '/programs/undergraduate' },
-      { name: 'Système', href: '/programs/graduate' },
-      { name: 'Demande', href: '/programs/doctoral' },
+      { name: 'Système Qualité', href: '/programs/graduate' },
+      { name: 'Demande de document', href: '/programs/doctoral' },
       { name: 'Demande de d', href: '/programs/graduate' },
       { name: 'Doctoral', href: '/programs/doctoral' }
     ]
@@ -42,12 +44,14 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-100 transition-all ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'} font-poppins` }>
-      <nav className="container mx-auto px-4 py-3">
+    <header
+      className={`sticky top-0 z-100 transition-all ${scrolled ? 'bg-white shadow-md animated fadeInDown' : 'bg-transparent'} font-poppins` }
+    >
+      <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold text-blue-800">
-            AI<span className="text-blue-600">BS</span>
+            <Image src={logo} alt="logo" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -56,17 +60,17 @@ export default function Navbar() {
               <div key={link.name} className="relative group">
                 <Link 
                   href={link.href} 
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === link.href ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+                  className={`px-3 py-2 rounded text-sm font-medium ${pathname === link.href ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
                 >
                   {link.name}
                 </Link>
                 {link.subLinks && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white py-1 hidden group-hover:block">
+                  <div className="absolute left-0 w-55 rounded-lg shadow bg-white py-1 hidden group-hover:block">
                     {link.subLinks.map((subLink) => (
                       <Link
                         key={subLink.name}
                         href={subLink.href}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                        className="flex items-center justify-between w-full px-4 py-2 text-sm hover:text-[#2572FF]"
                       >
                         {subLink.name}
                       </Link>

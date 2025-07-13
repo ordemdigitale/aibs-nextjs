@@ -2,7 +2,7 @@
 export default function TopBar() {
   return (
     <div className="bg-[#f6f7fa] text-sm font-poppins">
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="block lg:flex md:justify-between md:text-left text-center">
 
           <div className="grid place-items-center border-b border-[#dce1e9] md:border-none items-center justify-center md:flex lg:flex text-base">

@@ -32,6 +32,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${karla.variable} antialiased`}
       >
         <TopBar />
+        <Navbar />
         {children}
       </body>
     </html>
