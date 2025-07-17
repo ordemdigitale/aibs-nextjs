@@ -5,6 +5,7 @@ import Image from 'next/image'
 import logo from '../../../../public/aibs_logo.png'
 import { usePathname } from 'next/navigation'
 import { FiMenu, FiX } from 'react-icons/fi'
+import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri'
 
 const navLinks = [
   { name: 'L\'\école',
@@ -72,20 +73,33 @@ export default function Navbar() {
               <div key={link.name} className="relative group">
                 <Link 
                   href={link.href} 
-                  className={`px-3 py-2 rounded text-sm font-medium ${pathname === link.href ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+                  className="flex items-center justify-between w-full py-2 px-3 rounded hover:text-blue-600 md:hover:bg-transparent md:border-0 lg:p-0 lg:w-auto capitalize"
                 >
                   {link.name}
+                  {link.subLinks && <RiArrowDownSLine className="ml-2" />}
                 </Link>
                 {link.subLinks && (
-                  <div className="absolute left-0 w-55 rounded-lg shadow bg-white py-1 hidden group-hover:block">
+                  <div className="absolute left-0 w-56 rounded-md shadow-lg bg-white py-1 hidden group-hover:block z-20">
                     {link.subLinks.map((subLink) => (
-                      <Link
-                        key={subLink.name}
-                        href={subLink.href}
-                        className="flex items-center justify-between w-full px-4 py-2 text-sm hover:text-[#2572FF]"
-                      >
-                        {subLink.name}
-                      </Link>
+                      <div key={subLink.name} className='relative group/sub'>
+                        <Link href={subLink.href} className='flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-blue-600'>
+                          {subLink.name}
+                          {subLink.nestedLinks && <RiArrowRightSLine className="ml-2" />}
+                        </Link>
+                        {subLink.nestedLinks && (
+                          <div className="absolute top-0 left-full w-56 rounded-md shadow-lg bg-white py-1 hidden group-hover/sub:block z-30">
+                            {subLink.nestedLinks.map((nestedLink) => (
+                              <Link 
+                                key={nestedLink.name} 
+                                href={nestedLink.href} 
+                                className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600"
+                              >
+                                {nestedLink.name}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
