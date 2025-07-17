@@ -10,8 +10,20 @@ const navLinks = [
   { name: 'L\'\école',
     href: '#',
     subLinks: [
-      { name: 'Découvrez', href: '/programs/undergraduate' },
-      { name: 'Système Qualité', href: '/programs/graduate' },
+      { 
+        name: 'Découvrez AIBS',
+        href: '/programs/undergraduate',
+        nestedLinks: [
+          { name: 'Mot du PDG', href: '/programs/mot-du-pdg' },
+          { name: 'Présentation', href: '/programs/presentation' },
+        ]
+      },
+      { name: 'Système Qualité',
+        href: '/programs/graduate',
+        nestedLinks: [
+          { name: 'Politique Qualité', href: '/l-ecole/systeme-qualite/politique-qualite' },
+        ]
+      },
       { name: 'Demande de document', href: '/programs/doctoral' },
       { name: 'Demande de d', href: '/programs/graduate' },
       { name: 'Doctoral', href: '/programs/doctoral' }
@@ -23,7 +35,7 @@ const navLinks = [
     subLinks: [
       { name: 'Undergraduate', href: '/programs/undergraduate' },
       { name: 'Graduate', href: '/programs/graduate' },
-      { name: 'Doctoral', href: '/programs/doctoral' }
+      { name: 'BTS', href: '/programs/doctoral' }
     ]
   },
   { name: 'Bibliothèque numérique', href: '/admissions' },
