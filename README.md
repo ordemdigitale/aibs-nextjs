@@ -1,2 +1,2 @@
 # Site web AIBS
-- Un projet [Next.js](https://nextjs.org).
+- Refonte du site web avec [Next.js](https://nextjs.org).
