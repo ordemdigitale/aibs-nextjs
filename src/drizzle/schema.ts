@@ -1,43 +1,66 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 
-export const users = sqliteTable("users", {
+// --- Main navigation links table ---
+export const navLinks = sqliteTable("nav_links", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
-  email: text("email").notNull().unique(),
+  slug: text('slug').notNull(),
+  order: integer('order').notNull(), // For maintaining display order
+  createdAt: text('created_at').default("datetime('now')"),
+  updatedAt: text('updated_at').default("datetime('now')")
 });
 
-// --- Categories table ---
-export const categories = sqliteTable("categories", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  slug: text("slug").notNull().unique(),
-  label: text("label").notNull().unique(),
-  description: text("description"),
-  imageUrl: text("image_url").default(""),
+// --- Sub-links table (level 2) ---
+export const subLinks = sqliteTable('sub_links', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  slug: text('href').notNull(),
+  parentId: integer('parent_id').notNull().references(() => navLinks.id, { onDelete: 'cascade' }),
+  order: integer('order').notNull(),
+  createdAt: text('created_at').default("datetime('now')"),
+  updatedAt: text('updated_at').default("datetime('now')")
 });
 
-// --- Products table ---
-export const products = sqliteTable("products", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull().unique(),
-  description: text("description"),
-  price: real("price").notNull(),
-  currency: text("currency").default("EUR"),
-  rating: real("rating").default(0),
-  // To implement multiple image for a product consider using a separate table for images
-  categoryId: integer("category_id")
-    .notNull()
-    .references(() => categories.id, { onDelete: "cascade" }),
+// --- Nested links table (level 3) ---
+export const nestedLinks = sqliteTable('nested_links', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  slug: text('href').notNull(),
+  parentId: integer('parent_id').notNull().references(() => subLinks.id, { onDelete: 'cascade' }),
+  order: integer('order').notNull(),
+  createdAt: text('created_at').default("datetime('now')"),
+  updatedAt: text('updated_at').default("datetime('now')")
 });
 
 // --- Relationships ---
-export const categoriesRelations = relations(categories, ({ many }) => ({
-  products: many(products),
+export const navLinksRelations = relations(navLinks, ({ many }) => ({
+  subLinks: many(subLinks),
 }));
 
-export const productsRelations = relations(products, ({ one }) => ({
-  category: one(categories, {
-    fields: [products.categoryId],
-    references: [categories.id],
+export const subLinksRelations = relations(subLinks, ({ one, many }) => ({
+  parent: one(navLinks, {
+    fields: [subLinks.parentId],
+    references: [navLinks.id],
+  }),
+  nestedLinks: many(nestedLinks),
+}));
+
+export const nestedLinksRelations = relations(nestedLinks, ({ one }) => ({
+  parent: one(subLinks, {
+    fields: [nestedLinks.parentId],
+    references: [subLinks.id],
   }),
 }));
+
+// TypeScript types for your components
+export type NavLink = typeof navLinks.$inferSelect;
+export type SubLink = typeof subLinks.$inferSelect;
+export type NestedLink = typeof nestedLinks.$inferSelect;
+
+// Type for the complete navigation structure
+export type NavigationStructure = NavLink & {
+  subLinks: (SubLink & {
+    nestedLinks: NestedLink[];
+  })[];
+};
