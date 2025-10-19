@@ -20,7 +20,7 @@ export default function NavbarAlt() {
       }
       window.addEventListener('scroll', handleScroll)
       return () => window.removeEventListener('scroll', handleScroll)
-    }, [loading])
+    }, [])
 
   useEffect(() => {
     async function fetchNavData() {
@@ -41,8 +41,8 @@ export default function NavbarAlt() {
 
   return (
     <header className={`sticky top-0 z-100 transition-all ${scrolled ? 'bg-white shadow-md animated fadeInDown' : 'bg-transparent'} font-poppins` }>
-      <nav className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+      <nav className="container mx-auto px-4 flex flex-wrap z-50 items-center justify-between w-full">
+        <div className="flex justify-between items-center w-full">
           {/* Logo */}
           <Link href="/" className="text-2xl font-bold text-blue-800">
             <Image src={logo} alt="logo" />

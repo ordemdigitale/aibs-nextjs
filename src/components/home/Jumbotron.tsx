@@ -48,7 +48,7 @@ export default function Jumbotron() {
                   <option>Master Professionel</option>
                   <option>MBA</option>
                   <option>VAP/VAE</option>
-                  <option>Bourse d'études en Chine</option>
+                  <option>Bourse études en Chine</option>
                 </select>
                 <button
                   type="submit"

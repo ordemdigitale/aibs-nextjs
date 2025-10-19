@@ -9,19 +9,23 @@ export async function migrateVideosData() {
     const mainVideos = await db.insert(videos).values([
         {
             title: "Partenariat avec ATLANTIC GROUP : Intervention du DG M. ABISSA Kouakou",
-            link: ""
+            link: "dfdfdfdf",
+            videoid: "dfdfdf"
         },
         {
             title: "AFG Compétences : Recruter des talents à AIBS !",
-            link: ""
+            link: "ggpoglgkg",
+            videoid: "dfdfdf"
         },
         {
             title: "Rédiger un CV percutant",
-            link: ""
+            link: "okokkok",
+            videoid: "dfdfdf"
         },
         {
             title: "Dr. Ahmed TRAORE - DCH AFG Holding | PROJET AFG COMPETENCE",
-            link: ""
+            link: "nnhffgjfgfgfi",
+            videoid: "dfdfdf"
         },
     ]).returning();
   } catch (error) {

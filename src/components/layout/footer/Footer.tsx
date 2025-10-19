@@ -1,5 +1,5 @@
-import { FaPhone, FaEnvelope } from 'react-icons/fa'
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'
+/* import { FaPhone, FaEnvelope } from 'react-icons/fa'
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa' */
 import Image from 'next/image'
 import logo from '../../../../public/aibs_logo.png'
 
