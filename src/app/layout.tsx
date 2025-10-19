@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
-import { Poppins, Karla } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Poppins, Karla, Montserrat } from "next/font/google";
+import { TopBar, Navbar } from '@/components/layout/header';
+import Footer from '@/components/layout/footer/Footer';
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -14,6 +16,12 @@ const karla = Karla({
   weight: ["200", "300", "400", "500", "600", "700", "800"]
 });
 
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"]
+});
+
 export const metadata: Metadata = {
   title: "Atlantique International Business School - AIBS",
   description: "Découvrez nos programmes d'études et la vie sur le campus",
@@ -25,11 +33,12 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${poppins.variable} ${karla.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={`${poppins.variable} ${montserrat.variable} ${karla.variable} antialiased`}>
+        <TopBar/>
+        <Navbar/>
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

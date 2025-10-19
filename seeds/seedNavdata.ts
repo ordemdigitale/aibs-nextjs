@@ -1,8 +1,7 @@
-// scripts/seed.ts
-// Mogration scripts to populate the db with initial data
+// seeds/seedNavdata.ts
+// Seed script to populate the navigation table with initial data
 import { db } from "@/drizzle/db";
 import { navLinks, subLinks, nestedLinks } from "@/drizzle/schema";
-//import { eq } from "drizzle-orm";
 
 export async function migrateNavData() {
   try {
@@ -49,7 +48,8 @@ export async function migrateNavData() {
     // Insert nested links for "Découvrez AIBS"
     await db.insert(nestedLinks).values([
       { name: 'Mot du PDG', slug: 'mot-du-pdg', parentId: decouvrezAibsId, order: 1 },
-      { name: 'Présentation', slug: 'presentation', parentId: decouvrezAibsId, order: 2 }
+      { name: 'Présentation', slug: 'presentation', parentId: decouvrezAibsId, order: 2 },
+      { name: 'Points forts', slug: 'points-forts', parentId: decouvrezAibsId, order: 3 }
     ]);
 
     // Insert nested links for "Système Qualité"
@@ -62,18 +62,4 @@ export async function migrateNavData() {
     console.error("Error during migration:", error);
     throw error;
   }
-
-}
-
-// Function to run the migration
-export async function runMigration() {
-  await migrateNavData();
-}
-
-// Run migration if this module is executed directly
-if (require.main === module) {
-  runMigration().catch(error => {
-    console.error("Migration failed:", error);
-    process.exit(1);
-  });
 }

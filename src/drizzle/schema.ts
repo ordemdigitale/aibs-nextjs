@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, AnySQLiteColumn } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 
 // --- Main navigation links table ---
@@ -64,3 +64,57 @@ export type NavigationStructure = NavLink & {
     nestedLinks: NestedLink[];
   })[];
 };
+
+// --- Programs table ---
+export const programs = sqliteTable("programs", {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name', { length: 200 }).notNull(),
+  slug: text('slug').notNull(),
+  description: text('description'),
+  thumbnail: text('thumbnail'), // URL or path to image (image on home page)
+  cover: text('cover'), // URL or path to image (detail page cover)
+  parentId: integer('parent_id').references((): AnySQLiteColumn => programs.id, { onDelete: 'cascade' }), // Self-referencing for hierarchy
+  level: text('level', { length: 50 }), // e.g., "Bac +2", "Bac +3"
+  campus: text('campus', { length: 100 }), // e.g., "Cocody Danga"
+  langue: text('langue', { length: 50 }), // e.g., "Français"
+  rythm: text('rythm', { length: 100 }), // e.g., "Cours du jour", "Cours du soir", "Alternance"
+  duration: text('duration', { length: 50 }), // e.g., "2 ans", "3 ans"
+  order: integer('order').notNull(), // For maintaining display order
+});
+
+// --- Relationships ---
+export const programsRelations = relations(programs, ({ one, many }) => ({
+  parent: one(programs, {
+    fields: [programs.parentId],
+    references: [programs.id],
+    relationName: 'subPrograms', // For parent-child
+  }),
+  subPrograms: many(programs, { relationName: 'subPrograms' }), // Children (sub-programs)
+}));
+
+// TypeScript type for programs
+export type Program = typeof programs.$inferSelect;
+// Type for the complete programs structure
+export type ProgramsStructure = Program & {
+  subPrograms: Program[];
+};
+
+// --- Posts table ---
+export const posts = sqliteTable("posts", {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title', { length: 255 }).notNull(),
+  thumbnail: text('thumbnail'), // URL or path to image (image on home page)
+  link: text('link').notNull(), // URL to the full post
+});
+// TypeScript type for posts
+export type Post = typeof posts.$inferSelect;
+
+// --- Videos table ---
+export const videos = sqliteTable("videos", {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title', { length: 255 }).notNull(),
+  videoid: text('video_id').notNull(), // YT video ID
+  link: text('link').notNull(), // URL to the full post
+});
+// TypeScript type for videos
+export type Video = typeof videos.$inferSelect;
