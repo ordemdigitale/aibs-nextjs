@@ -42,7 +42,8 @@ export default function page() {
             alt="img"
             src="https://www.atlantique-ibs.net/media/uploads/ck/2024/07/12/5-points-forts-aibs.jpg"
             className="h-[747px] w-[1120px]"
-            
+            width={1200}
+            height={800}
           />
             
           </p>

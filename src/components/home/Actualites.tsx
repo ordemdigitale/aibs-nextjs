@@ -38,7 +38,7 @@ export default function Actualites() {
           {posts.map((post) => (
             <Link
               key={post.id}
-              href={`/posts/${post.link}`}
+              href={post.link ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-6 sm:p-8 bg-white border border-gray-100 bg-opacity-50 shadow-2xl shadow-gray-600/10 cursor-pointer"
