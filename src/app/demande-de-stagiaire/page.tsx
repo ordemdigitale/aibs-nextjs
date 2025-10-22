@@ -52,17 +52,17 @@ export default function page() {
             </p>
 
             <p><br />
-              Nous vous offrons la possibilité de recruter des stagiaires issus de nos différents programmes, qu'il s'agisse de marketing, gestion, finance, ou tout autre domaine.
+              Nous vous offrons la possibilité de recruter des stagiaires issus de nos différents programmes, qu&apos;il s&apos;agisse de marketing, gestion, finance, ou tout autre domaine.
             </p>
 
             <p>&nbsp;</p>
 
             <p>
-              Grâce à notre processus simplifié, vous pouvez soumettre en ligne vos demandes de stagiaires et trouver rapidement le profil qui correspond à vos besoins. Offrez à nos étudiants l'opportunité de contribuer à vos projets tout en acquérant une expérience professionnelle enrichissante.
+              Grâce à notre processus simplifié, vous pouvez soumettre en ligne vos demandes de stagiaires et trouver rapidement le profil qui correspond à vos besoins. Offrez à nos étudiants l&apos;opportunité de contribuer à vos projets tout en acquérant une expérience professionnelle enrichissante.
             </p>
 
             <p><br />
-              Déposez dès aujourd'hui votre demande de stagiaire et découvrez les talents de demain !
+              Déposez dès aujourd&apos;hui votre demande de stagiaire et découvrez les talents de demain !
             </p>
 
             <p>&nbsp;</p>

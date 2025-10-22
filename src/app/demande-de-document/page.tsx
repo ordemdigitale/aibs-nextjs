@@ -1,7 +1,7 @@
 import React from "react"
-import Link from 'next/link'
-import Image from 'next/image'
-import PageHeader from '@/components/layout/PageHeader'
+import Link from "next/link"
+import Image from "next/image"
+import PageHeader from "@/components/layout/PageHeader"
 
 export default function page() {
   return (
@@ -45,15 +45,15 @@ export default function page() {
               Demande de documents
             </h2>
               <p>&nbsp;</p>
-              <p>À Atlantique International Business School, nous facilitons l'accès aux documents administratifs essentiels pour nos étudiants et leurs parents.</p>
+              <p>À Atlantique International Business School, nous facilitons l&apos;accès aux documents administratifs essentiels pour nos étudiants et leurs parents.</p>
 
             <p><br />
-              Que vous ayez besoin d'une attestation de scolarité, d'un relevé de notes, ou de tout autre document officiel, notre service administratif est à votre disposition pour traiter vos demandes rapidement et efficacement.</p>
+              Que vous ayez besoin d&apos;une attestation de scolarité, d&apos;un relevé de notes, ou de tout autre document officiel, notre service administratif est à votre disposition pour traiter vos demandes rapidement et efficacement.</p>
             <p>&nbsp;</p>
             <p>Vous pouvez désormais soumettre vos demandes en quelques clics.</p>
 
             <p><br />
-            Nous mettons un point d'honneur à offrir un service simple, transparent et à répondre à vos besoins dans les meilleurs&nbsp;délais.</p>
+            Nous mettons un point d&apos;honneur à offrir un service simple, transparent et à répondre à vos besoins dans les meilleurs&nbsp;délais.</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>

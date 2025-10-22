@@ -1,7 +1,7 @@
 import React from "react"
-import Link from 'next/link'
-import Image from 'next/image'
-import PageHeader from '@/components/layout/PageHeader'
+import Link from "next/link"
+import Image from "next/image"
+import PageHeader from "@/components/layout/PageHeader"
 
 export default function page() {
   return (
@@ -44,7 +44,7 @@ export default function page() {
           {/* Text Section */}
           <div className="mb-6 md:mb-0 text-md font-poppins">
             <h2 className="font-poppins font-bold text-[24px] text-center">
-              Rejoignez notre équipe d'enseignants vacataires !
+              Rejoignez notre équipe d&apos;enseignants vacataires !
             </h2>
             <p>&nbsp;</p>
             <p>
@@ -52,17 +52,17 @@ export default function page() {
             </p>
 
             <p><br />
-              Nous sommes constamment à la recherche de professionnels qualifiés et d'enseignants expérimentés prêts à partager leurs connaissances avec la prochaine génération de leaders.
+              Nous sommes constamment à la recherche de professionnels qualifiés et d&apos;enseignants expérimentés prêts à partager leurs connaissances avec la prochaine génération de leaders.
             </p>
 
             <p>&nbsp;</p>
 
             <p>
-              En tant que vacataire, vous aurez l'opportunité de contribuer à la formation de nos étudiants dans un environnement dynamique et innovant. Que vous soyez un professionnel en activité ou un enseignant en quête d'une expérience supplémentaire, votre expertise est la bienvenue.
+              En tant que vacataire, vous aurez l&apos;opportunité de contribuer à la formation de nos étudiants dans un environnement dynamique et innovant. Que vous soyez un professionnel en activité ou un enseignant en quête d&apos;une expérience supplémentaire, votre expertise est la bienvenue.
             </p>
 
             <p><br />
-              Déposez dès maintenant votre demande de vacation et intégrez un établissement où l'excellence et l'innovation sont au cœur de notre mission éducative.
+              Déposez dès maintenant votre demande de vacation et intégrez un établissement où l&apos;excellence et l&apos;innovation sont au cœur de notre mission éducative.
             </p>
 
             <p>&nbsp;</p>
