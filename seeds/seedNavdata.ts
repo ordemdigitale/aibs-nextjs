@@ -23,8 +23,8 @@ export async function migrateNavData() {
 
     // Insert sub-links for "L'école"
     const lecoleSubLinks = await db.insert(subLinks).values([
-      { name: "Découvrez AIBS", slug: "decouvrez-aibs", parentId: lecoleId, order: 1 },
-      { name: "Système Qualité", slug: "systeme-qualite", parentId: lecoleId, order: 2 },
+      { name: "Découvrez AIBS", slug: "#", parentId: lecoleId, order: 1 },
+      { name: "Système Qualité", slug: "#", parentId: lecoleId, order: 2 },
       { name: "Demande de document", slug: "demande-de-document", parentId: lecoleId, order: 3 },
       { name: "Demande de vacation", slug: "demande-de-vacation", parentId: lecoleId, order: 4 },
       { name: "Demande de stagiaire", slug: "demande-de-stagiaire", parentId: lecoleId, order: 5 }
