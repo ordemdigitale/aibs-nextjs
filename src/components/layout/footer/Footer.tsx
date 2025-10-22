@@ -44,8 +44,8 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4 uppercase">liens rapides</h3>
             <ul className="space-y-2">
               <li><a href="#" className="hover:text-blue-400">Actualités</a></li>
-              <li><a href="#" className="hover:text-blue-400">Bibliothèque numérique</a></li>
-              <li><a href="#" className="hover:text-blue-400">E-learning</a></li>
+              <li><a href="https://promo-ci.youscribe.com/pysci/lp_service_gen?utm_source=youscribe&utm_medium=others&utm_campaign=HP" className="hover:text-blue-400">Bibliothèque numérique</a></li>
+              <li><a href="https://myschool.atlantique-ibs.net/" className="hover:text-blue-400">E-learning</a></li>
             </ul>
           </div>
 

@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { Post } from "@/drizzle/schema";
 
 export default function Actualites() {
-  const videoIds = ['dQw4w9WgXcQ', '2qLjhm0cRwA', 'g6h7i8j9k0l', 'm1n2o3p4q5r'];
+  const videoIds = ['y9Fh7cYwj5M', '2qLjhm0cRwA', 'Wfb4rQY3csA', 'sF6E_7dV_cA'];
   // typed posts array to match drizzle Post type
   const [posts, setPosts] = useState<Post[]>([]);
 

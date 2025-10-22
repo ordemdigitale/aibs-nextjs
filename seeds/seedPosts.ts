@@ -11,6 +11,7 @@ export async function migratePostsData() {
             { title: "🚀 AFG Compétences : Recruter et Former des Talents pour AFG HOLDING ", thumbnail: "https://atlantique-ibs.net/media/uploads/vignettes/540960971_1098202792443746_8503474364770669941_n.jpg", link: "https://www.facebook.com/story.php?story_fbid=1098202822443743&id=100067621076164&rdid=m6M6iPj1yRH1EtN9#" },
             { title: "✨ Retour sur une soirée mémorable ! Partie 1✨", thumbnail: "https://atlantique-ibs.net/media/uploads/vignettes/537381029_1092727522991273_1182505101808929455_n.jpg", link: "https://www.facebook.com/story.php?story_fbid=1092728159657876&id=100067621076164&rdid=vd49nroih3Dzm9qF#" },
         ]).returning();
+        console.log("✅ Posts data migration completed successfully!");
     } catch (error) {
         console.error("Error during migration posts data migration:", error);
         throw error;        
