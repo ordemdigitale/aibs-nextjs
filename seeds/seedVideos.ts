@@ -28,6 +28,7 @@ export async function migrateVideosData() {
             videoid: "dfdfdf"
         },
     ]).returning();
+    console.log("✅ Videos data migration completed successfully!");
   } catch (error) {
     console.error("Error during migration videos data migration:", error);
     throw error;
