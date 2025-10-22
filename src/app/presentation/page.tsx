@@ -45,6 +45,8 @@ export default function Presentation() {
             alt="img"
             src="https://www.atlantique-ibs.net/media/uploads/ck/2024/07/12/image-presentation.jfif"
             className="float-left h-[338px] m-2.5 ml-6 w-[450px]"
+            width={450}
+            height={338}
           />
         </p>
 

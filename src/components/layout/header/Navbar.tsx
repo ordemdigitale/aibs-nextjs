@@ -53,10 +53,10 @@ export default function NavbarAlt() {
 
   return (
     <header className={`sticky top-0 z-50 transition-all ${scrolled ? 'bg-white shadow-md animated fadeInDown' : 'bg-transparent'} font-poppins`}>
-      <nav className="container mx-auto px-4 flex flex-wrap items-center justify-between w-full py-4">
+      <nav className="container mx-auto px-4 flex flex-wrap items-center justify-between w-full py-4 font-medium">
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-blue-800">
+          <Link href="/" className="text-2xl text-blue-800">
             <Image src={logo} alt="logo" width={120} height={40} />
           </Link>
 

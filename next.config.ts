@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/media/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "atlantique-ibs.net",
+        port: "",
+        pathname: "/media/**",
+      },
     ],
   },
 };

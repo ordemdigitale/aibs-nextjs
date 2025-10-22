@@ -5,8 +5,9 @@ import { relations } from "drizzle-orm";
 export const navLinks = sqliteTable("nav_links", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
-  slug: text('slug').notNull(),
-  order: integer('order').notNull(), // For maintaining display order
+  slug: text("slug").notNull(),
+  order: integer("order").notNull(), // For maintaining display order
+  link: text("link"), // External link
   createdAt: text('created_at').default("datetime('now')"),
   updatedAt: text('updated_at').default("datetime('now')")
 });
