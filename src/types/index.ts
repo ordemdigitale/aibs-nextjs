@@ -1,0 +1,1 @@
+export type ImageValue = string | null | undefined;
