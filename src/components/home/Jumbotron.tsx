@@ -15,6 +15,7 @@ export default function Jumbotron() {
             height={500}
           />
         </div>
+        
         {/* Form Section (Right) */}
         <div className="flex w-full xl:w-4/12 justify-center mt-6 xl:mt-0">
           <div className="px-10 z-1">
