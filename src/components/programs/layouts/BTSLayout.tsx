@@ -44,7 +44,7 @@ export function BTSLayout({ program }: Props) {
                 {program.subPrograms.map((sub) => (
                   <Link 
                     key={sub.id} 
-                    href={`/programs/${sub.slug}`}
+                    href={`/programme/${sub.slug}`}
                     className="block p-4 border border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition-all"
                   >
                     <h3 className="text-lg font-medium text-blue-600">{sub.name}</h3>

@@ -82,7 +82,7 @@ export default async function ProgrammePage({ params }: Props) {
           Une erreur est survenue lors du chargement du programme.
           Veuillez réessayer ultérieurement.
         </p>
-        <Link href="/programs" className="mt-6 inline-block text-blue-600 hover:text-blue-800 transition-colors">
+        <Link href="/programme" className="mt-6 inline-block text-blue-600 hover:text-blue-800 transition-colors">
           Retour aux programmes
         </Link>
       </main>
