@@ -25,9 +25,9 @@ export async function migrateNavData() {
     const lecoleSubLinks = await db.insert(subLinks).values([
       { name: "Découvrez AIBS", slug: "#", parentId: lecoleId, order: 1 },
       { name: "Système Qualité", slug: "#", parentId: lecoleId, order: 2 },
-      { name: "Demande de document", slug: "demande-de-document", parentId: lecoleId, order: 3 },
-      { name: "Demande de vacation", slug: "demande-de-vacation", parentId: lecoleId, order: 4 },
-      { name: "Demande de stagiaire", slug: "demande-de-stagiaire", parentId: lecoleId, order: 5 }
+      { name: "Demande de document", slug: "/demande-de-document", parentId: lecoleId, order: 3 },
+      { name: "Demande de vacation", slug: "/demande-de-vacation", parentId: lecoleId, order: 4 },
+      { name: "Demande de stagiaire", slug: "/demande-de-stagiaire", parentId: lecoleId, order: 5 }
     ]).returning();
 
     // Find IDs for nested links
@@ -40,15 +40,15 @@ export async function migrateNavData() {
 
     // Insert nested links for "Découvrez AIBS"
     await db.insert(nestedLinks).values([
-      { name: "Mot du PDG", slug: "mot-du-pdg", parentId: decouvrezAibsId!, order: 1 },
-      { name: "Présentation", slug: "presentation", parentId: decouvrezAibsId!, order: 2 },
-      { name: "Points forts", slug: "points-forts", parentId: decouvrezAibsId!, order: 3 }
+      { name: "Mot du PDG", slug: "/mot-du-pdg", parentId: decouvrezAibsId!, order: 1 },
+      { name: "Présentation", slug: "/presentation", parentId: decouvrezAibsId!, order: 2 },
+      { name: "Points forts", slug: "/points-forts", parentId: decouvrezAibsId!, order: 3 }
     ]);
 
     // Insert nested links for "Système Qualité"
     await db.insert(nestedLinks).values([
-      { name: "Notre Politique Qualité", slug: "notre-politique-qualite", parentId: systemeQualiteId!, order: 1 },
-      { name: "Satisfaction Client", slug: "satisfaction-client", parentId: systemeQualiteId!, order: 2 },
+      { name: "Notre Politique Qualité", slug: "/notre-politique-qualite", parentId: systemeQualiteId!, order: 1 },
+      { name: "Satisfaction Client", slug: "/satisfaction-client", parentId: systemeQualiteId!, order: 2 },
     ]);
 
     // Insert sub-links for "Programmes"
