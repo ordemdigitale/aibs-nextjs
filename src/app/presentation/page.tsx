@@ -5,7 +5,7 @@ import PageHeader from '@/components/layout/PageHeader'
 
 export default function Presentation() {
   return (
-    <section className="w-full mx-auto">
+    <section className="w-full mx-auto font-poppins">
       {/* Page header */}
       <PageHeader />
       {/* Breadcrumb */}

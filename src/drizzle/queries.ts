@@ -75,10 +75,21 @@ export async function addNestedLink(name: string, slug: string, parentId: number
 export const getAllPrograms = cache(async (): Promise<ProgramsStructure[]> => {
   const result = await db.query.programs.findMany({
     orderBy: [asc(programs.order)],
-    with: { subPrograms: true }
+    with: {
+      parent: true,
+      subPrograms: {
+        orderBy: [asc(programs.order)]
+      }
+    }
   });
 
-  return result;
+  // Normalize `parent` to be undefined instead of null to match ProgramsStructure type
+  const normalized = result.map((item) => ({
+    ...item,
+    parent: item.parent ?? undefined
+  })) as ProgramsStructure[];
+
+  return normalized;
 });
 
 // Function to get a program by its slug

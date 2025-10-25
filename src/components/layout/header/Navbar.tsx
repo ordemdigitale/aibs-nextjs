@@ -8,6 +8,12 @@ import { RiArrowDownSLine, RiArrowRightSLine, RiMenu3Line, RiCloseLine } from 'r
 import logo from '../../../../public/aibs_logo.png'
 import Spinner from '@/components/ui/Spinner'
 
+// Custom display names mapping
+const displayNames: Record<string, string> = {
+  // Add your custom names here, for example:
+  'brevet de technicien supérieur (bts)': 'BTS',
+}
+
 export default function NavbarAlt() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -83,7 +89,7 @@ export default function NavbarAlt() {
                     href={link.slug || '#'}
                     className="flex items-center justify-between w-full py-2 px-3 rounded hover:text-blue-600 md:hover:bg-transparent md:border-0 lg:p-0 lg:w-auto capitalize"
                   >
-                    {link.name}
+                    {displayNames[link.name.toLowerCase()] || link.name}
                     {link.subLinks.length > 0 && <RiArrowDownSLine className="ml-2" />}
                   </Link>
                   {link.subLinks.length > 0 && (
@@ -94,7 +100,7 @@ export default function NavbarAlt() {
                             href={sublink.slug} 
                             className='flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-blue-600'
                           >
-                            {sublink.name}
+                            {displayNames[sublink.name.toLowerCase()] || sublink.name}
                             {sublink.nestedLinks.length > 0 && <RiArrowRightSLine className="ml-2" />}
                           </Link>
                           {sublink.nestedLinks.length > 0 && (
@@ -135,7 +141,7 @@ export default function NavbarAlt() {
                     className="block px-4 py-3 text-gray-700 hover:text-blue-600 capitalize"
                     onClick={() => toggleMenu()}
                   >
-                    {link.name}
+                    {displayNames[link.name.toLowerCase()] || link.name}
                   </Link>
                   {link.subLinks.length > 0 && (
                     <button

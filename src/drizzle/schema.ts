@@ -97,6 +97,7 @@ export const programsRelations = relations(programs, ({ one, many }) => ({
 export type Program = typeof programs.$inferSelect;
 // Type for the complete programs structure
 export type ProgramsStructure = Program & {
+  parent?: Program;
   subPrograms: Program[];
 };
 
