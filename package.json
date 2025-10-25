@@ -10,8 +10,7 @@
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:seed": "tsx seeds/index.ts",
-    "db:migrate": "drizzle-kit migrate",
-    "db:reset": "rm -rf ./src/drizzle/migrations && drizzle-kit reset && npm run db:push && npm run db:seed"
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
