@@ -156,9 +156,15 @@ export const getAllPosts = cache(async (): Promise<Post[]> => {
 export const getPostBySlug = cache(async (slug: string): Promise<Post | null> => {
   const singlePost = await db.query.posts.findFirst({
     where: eq(posts.slug, slug),
+    columns: { id: true, title: true, slug: true, link: true, thumbnail: true, content: true, createdAt: true, updatedAt: true },
   });
   return singlePost || null;
 });
+// Query to create a new post
+export async function createPost(data: Partial<Post>): Promise<Post> {
+  const newPost = await db.insert(posts).values(data as Post).returning();
+  return newPost[0];
+}
 
 // Query to get all videos
 export const getAllVideos = cache(async (): Promise<Video[]> => {

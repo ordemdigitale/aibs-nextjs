@@ -43,6 +43,7 @@ export const posts = sqliteTable("posts", {
   title: text('title', { length: 255 }).notNull(),
   slug: text("slug").unique(), // URL path (e.g., "/about", "/posts/visite-entreprise")
   link: text('link'), // URL to the full post
+  content: text("content"), // New field for WYSIWYG content
   thumbnail: text('thumbnail'), // URL or path to image (image on home page)
   createdAt: text("created_at").default("datetime('now')"),
   updatedAt: text("updated_at").default("datetime('now')"),
