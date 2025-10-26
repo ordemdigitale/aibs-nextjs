@@ -26,7 +26,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     while (currentPage) {
       trail.unshift(currentPage); // Add to start of array
       if (currentPage.parentId) {
-
         currentPage = await db.query.pages.findFirst({
           where: eq(pages.id, currentPage.parentId),
         });
@@ -37,7 +36,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
 
     // Optionally add a "Home" link to the root
     if (trail.length > 0 && trail[0].parentId === null) {
-      trail.unshift({ id: 0, name: 'Home', slug: '/', subPages: [], parentId: null, order: 0, createdAt: '', updatedAt: '' } as PagesStructure);
+      trail.unshift({ id: 0, name: "Accueil",  } as PagesStructure);
     }
 
     return trail;
@@ -71,58 +70,58 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
       {/* Page header */}
       <PageHeader />
       {/* Breadcrumbs */}
-      <nav className="mb-4 text-sm text-gray-600">
-        <ol className="flex space-x-2">
-          {breadcrumbTrail.map((crumb, index) => (
-            <li key={crumb.id || index}>
-              {index > 0 && <span className="mx-2">{'>'}</span>}
-              {index === breadcrumbTrail.length - 1 ? (
-                crumb.name
-              ) : (
-                <Link href={crumb.slug || '#'} className="text-blue-600 hover:underline">
-                  {crumb.name}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
-      <h1 className="text-3xl font-bold mb-4">{page.name}</h1>
+      <div className="max-w-5xl mx-auto text-sm font-medium">
+        <nav className="flex py-3 text-gray-700">
+          <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            <svg className="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"></path>
+            </svg>
+            {breadcrumbTrail.map((crumb, index) => (
+              <li key={crumb.id || index}>
+                {index > 0 && <span className="mx-2">{'>'}</span>}
+                {index === breadcrumbTrail.length - 1 ? (
+                  <span className="text-gray-600">{crumb.name}</span>
+                ) : (
+                  <Link href={crumb.slug || '/'} className="hover:underline">
+                    {crumb.name}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </div>
+      {/* Page content */}
+      <div className="max-w-5xl mx-auto my-10">
 
-      {/* Cover Image */}
-      {page.cover && (
-        <div className="mb-4">
-          <Image src={page.cover} alt={page.name} width={800} height={400} className="w-full h-auto object-cover rounded-lg" />
-        </div>
-      )}
+        {/* Cover Image */}
+        {page.cover && (
+          <div className="mb-4">
+            <Image src={page.cover} alt={page.name} width={800} height={400} className="w-full h-auto object-cover rounded-lg" />
+          </div>
+        )}
 
-      {/* Thumbnail */}
-      {page.thumbnail && (
-        <div className="mb-4">
-          <Image src={page.thumbnail} alt={page.name} width={300} height={200} className="w-full h-auto object-cover rounded-lg" />
-        </div>
-      )}
+        {/* Content */}
+        {page.content && (
+          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
+        )}
 
-      {/* Content */}
-      {page.content && (
-        <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
-      )}
+        {/* Additional Fields for Programs */}
+        {(page.level || page.campus || page.langue || page.rythm || page.duration) && (
+          <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+            {page.level && <p><strong>Level:</strong> {page.level}</p>}
+            {page.campus && <p><strong>Campus:</strong> {page.campus}</p>}
+            {page.langue && <p><strong>Language:</strong> {page.langue}</p>}
+            {page.rythm && <p><strong>Rhythm:</strong> {page.rythm}</p>}
+            {page.professionnalisation && <p><strong>Professionalization:</strong> {page.professionnalisation}</p>}
+            {page.internationalisation && <p><strong>Internationalization:</strong> {page.internationalisation}</p>}
+            {page.duration && <p><strong>Duration:</strong> {page.duration}</p>}
+          </div>
+        )}
 
-      {/* Additional Fields for Programs */}
-      {(page.level || page.campus || page.langue || page.rythm || page.duration) && (
-        <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-          {page.level && <p><strong>Level:</strong> {page.level}</p>}
-          {page.campus && <p><strong>Campus:</strong> {page.campus}</p>}
-          {page.langue && <p><strong>Language:</strong> {page.langue}</p>}
-          {page.rythm && <p><strong>Rhythm:</strong> {page.rythm}</p>}
-          {page.professionnalisation && <p><strong>Professionalization:</strong> {page.professionnalisation}</p>}
-          {page.internationalisation && <p><strong>Internationalization:</strong> {page.internationalisation}</p>}
-          {page.duration && <p><strong>Duration:</strong> {page.duration}</p>}
-        </div>
-      )}
-
-      {/* Render nested pages if any */}
-      {renderSubPages(page.subPages)}
+        {/* Render nested pages if any */}
+        {renderSubPages(page.subPages)}
+      </div>
     </section>
   );
 }
