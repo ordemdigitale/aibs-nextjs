@@ -92,19 +92,14 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
         </nav>
       </div>
       {/* Page content */}
-      <div className="max-w-5xl mx-auto my-10">
+      <div className="max-w-5xl mx-auto my-10 flex flex-wrap justify-between">
 
-        {/* Cover Image */}
-        {page.cover && (
-          <div className="mb-4">
-            <Image src={page.cover} alt={page.name} width={800} height={400} className="w-full h-auto object-cover rounded-lg" />
-          </div>
-        )}
-
-        {/* Content */}
-        {page.content && (
-          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
-        )}
+        <div className="xl:max-w-[600px] w-full">
+          {/* Left block */}
+          {page.content && (
+            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
+          )}
+        </div>
 
         {/* Additional Fields for Programs */}
         {(page.level || page.campus || page.langue || page.rythm || page.duration) && (

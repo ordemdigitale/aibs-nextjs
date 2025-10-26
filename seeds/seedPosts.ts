@@ -32,12 +32,6 @@ export async function migratePostsData() {
             thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/actu_vignette.png",
             content: "<p>Une étape importante pour AIBS avec l'homologation de toutes ses licences par le DSUP.</p>"
         },
-        {
-            title: "Mission aux Comores",
-            slug: "mission-aux-comores",
-            thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/462112886_869113592019335_9037365335298982038_n.jpg",
-            content: "<p>Une mission enrichissante aux Comores pour renforcer nos partenariats éducatifs.</p>"
-        },
         // External posts
         { title: "Journée sportive", link: "https://www.facebook.com/aibscotedivoire/videos/381746177827119", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/actu_vignette.png" },
         { title: "Promotion des journées informatiques", link: "https://www.facebook.com/aibscotedivoire/videos/2783666085123326s", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/actu_vignette.png" },
@@ -46,6 +40,7 @@ export async function migratePostsData() {
         { title: "Remise de présents au Directeur Général et au Directeur des Ressources Humaines de Orange bank", link: "https://www.facebook.com/story.php?story_fbid=803268075270554&id=100067621076164&mibextid=oFDknk&rdid=C55m23cPfx6IJlV5", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/remise-orange-bank.jpg" },
         { title: "Prise en charge 100% pour la LICENCE PROFESSIONNELLE par ALTERNANCE", link: "https://www.facebook.com/photo?fbid=875242574739770&set=a.442042641393101", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/AIBS.jpg" },
         { title: "Bachelor Management International", link: "https://www.facebook.com/photo?fbid=859426886321339&set=pcb.859426926321335", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/461225044_859231566340871_234986646396457468_n.jpg" },
+        { title: "Mission aux Comores", link: "https://www.facebook.com/photo?fbid=869873111943383&set=pcb.869873175276710", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/462112886_869113592019335_9037365335298982038_n.jpg", content: "<p>Une mission enrichissante aux Comores pour renforcer nos partenariats éducatifs.</p>" },
         { title: "✨ Retour sur une soirée mémorable ! Partie 1✨", link: "https://www.facebook.com/share/p/1BaVgZzshX/", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/537381029_1092727522991273_1182505101808929455_n.jpg" },
         { title: "🚀 AFG Compétences : Recruter et Former des Talents pour AFG HOLDING", link: "https://www.facebook.com/share/p/19ZMXKeSqQ/", thumbnail: "https://www.atlantique-ibs.net/media/uploads/vignettes/540960971_1098202792443746_8503474364770669941_n.jpg" },
         { title: "🎓 APPEL À CANDIDATURES — BOURSE 100% (2ᵉ cohorte)", link: "https://www.facebook.com/story.php?story_fbid=1109925347938157&id=100067621076164&rdid=0IqKgaJdmFabT57r#", thumbnail: "https://atlantique-ibs.net/media/uploads/vignettes/WhatsApp_Image_2025-09-18_%C3%A0_15.43.52_3cb3fd55.jpg" },
