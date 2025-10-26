@@ -149,6 +149,7 @@ export const searchPages = cache(async (keyword: string): Promise<Page[]> => {
 export const getAllPosts = cache(async (): Promise<Post[]> => {
   return await db.query.posts.findMany({
     orderBy: [desc(posts.id)],
+    columns: { id: true, title: true, slug: true, link: true, thumbnail: true, content: true, createdAt: true, updatedAt: true },
   });
 });
 
@@ -164,6 +165,15 @@ export const getPostBySlug = cache(async (slug: string): Promise<Post | null> =>
 export async function createPost(data: Partial<Post>): Promise<Post> {
   const newPost = await db.insert(posts).values(data as Post).returning();
   return newPost[0];
+}
+// Query to update an existing post
+export async function updatePost(id: number, data: Partial<Post>): Promise<Post | null> {
+  const updatedPost = await db
+    .update(posts)
+    .set({ ...data, updatedAt: new Date().toISOString() })
+    .where(eq(posts.id, id))
+    .returning();
+  return updatedPost[0] || null;
 }
 
 // Query to get all videos
