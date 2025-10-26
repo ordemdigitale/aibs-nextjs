@@ -1,6 +1,7 @@
 /* import { FaPhone, FaEnvelope } from 'react-icons/fa'
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa' */
 import Image from 'next/image'
+import Link from 'next/link'
 import logo from '../../../../public/aibs_logo.png'
 
 export default function Footer() {
@@ -43,9 +44,9 @@ export default function Footer() {
           <div className='col-span-full md:col-span-1'>
             <h3 className="text-xl font-bold mb-4 uppercase">liens rapides</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-blue-400">Actualités</a></li>
-              <li><a href="https://promo-ci.youscribe.com/pysci/lp_service_gen?utm_source=youscribe&utm_medium=others&utm_campaign=HP" className="hover:text-blue-400">Bibliothèque numérique</a></li>
-              <li><a href="https://myschool.atlantique-ibs.net/" className="hover:text-blue-400">E-learning</a></li>
+              <li><Link href="#" className="hover:text-blue-400">Actualités</Link></li>
+              <li><Link href="https://promo-ci.youscribe.com/pysci/lp_service_gen?utm_source=youscribe&utm_medium=others&utm_campaign=HP" className="hover:text-blue-400">Bibliothèque numérique</Link></li>
+              <li><Link href="https://myschool.atlantique-ibs.net/" className="hover:text-blue-400">E-learning</Link></li>
             </ul>
           </div>
 
@@ -53,14 +54,14 @@ export default function Footer() {
           <div className='col-span-full md:col-span-1'>
             <h3 className="text-xl font-bold mb-4 uppercase">à propos de aibs</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-blue-400">Mot du PDG</a></li>
-              <li><a href="/presentation" className="hover:text-blue-400">Présentation</a></li>
-              <li><a href="#" className="hover:text-blue-400">Points forts</a></li>
-              <li><a href="#" className="hover:text-blue-400">Notre politique qualité</a></li>
-              <li><a href="#" className="hover:text-blue-400">Satisfaction client</a></li>
-              <li><a href="#" className="hover:text-blue-400">Demande de Document</a></li>
-              <li><a href="#" className="hover:text-blue-400">Demande de Vacation</a></li>
-              <li><a href="#" className="hover:text-blue-400">Demande de Stagiaire</a></li>
+              <li><Link href="#" className="hover:text-blue-400">Mot du PDG</Link></li>
+              <li><Link href="/presentation" className="hover:text-blue-400">Présentation</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Points forts</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Notre politique qualité</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Satisfaction client</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Demande de Document</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Demande de Vacation</Link></li>
+              <li><Link href="#" className="hover:text-blue-400">Demande de Stagiaire</Link></li>
             </ul>
           </div>
         </div>

@@ -1,12 +1,10 @@
-import { migrateNavData } from "./seedNavdata";
-import { migrateProgramsData } from "./seedPrograms";
+import { migratePagesData } from "./seedPages";
 import { migratePostsData } from "./seedPosts";
 import { migrateVideosData } from "./seedVideos";
 
 // Function to run the migration
 export async function runMigration() {
-  await migrateNavData();
-  await migrateProgramsData();
+  await migratePagesData();
   await migratePostsData();
   await migrateVideosData();
   console.log("All migrations completed.");

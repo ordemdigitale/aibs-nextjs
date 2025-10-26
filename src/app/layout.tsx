@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins, Karla, Montserrat } from "next/font/google";
-import { TopBar, Navbar } from '@/components/layout/header';
+import { TopBar, NavbarServer } from '@/components/layout/header';
 import Footer from '@/components/layout/footer/Footer';
 
 const poppins = Poppins({
@@ -35,8 +35,8 @@ export default function ProjectLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={`${poppins.variable} ${montserrat.variable} ${karla.variable} antialiased`}>
-        <TopBar/>
-        <Navbar/>
+        <TopBar />
+        <NavbarServer />
         <main>{children}</main>
         <Footer />
       </body>

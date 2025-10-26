@@ -1,43 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import type { NavigationStructure } from '@/drizzle/schema'
-import Link from 'next/link'
-import Image from 'next/image'
-import { RiArrowDownSLine, RiArrowRightSLine, RiMenu3Line, RiCloseLine } from 'react-icons/ri'
-import logo from '../../../../public/aibs_logo.png'
-import Spinner from '@/components/ui/Spinner'
+import { useState, useEffect } from 'react';
+import type { PagesStructure } from '@/drizzle/schema';
+import Link from 'next/link';
+import Image from 'next/image';
+import { RiArrowDownSLine, RiArrowRightSLine, RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import logo from '../../../../public/aibs_logo.png';
+import Spinner from '@/components/ui/Spinner';
 
-export default function NavbarAlt() {
+export default function Navbar({ navData }: { navData: PagesStructure[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [navData, setNavData] = useState<NavigationStructure[]>([]);
-  const [loading, setLoading] = useState(true);
   const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null);
   const [activeNestedMenu, setActiveNestedMenu] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    async function fetchNavData() {
-      try {
-        const response = await fetch('/api/navigation');
-        const data = await response.json();
-        setNavData(data);
-      } catch (error) {
-        console.error('Error fetching navigation data:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchNavData();
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const toggleMenu = () => {
@@ -45,25 +27,89 @@ export default function NavbarAlt() {
   };
 
   const toggleSubMenu = (id: number) => {
-    setActiveSubMenu(activeSubMenu === id ? null : id);
+    setActiveSubMenu((prev) => (prev === id ? null : id)); // Toggle logic
   };
 
   const toggleNestedMenu = (id: number) => {
-    setActiveNestedMenu(activeNestedMenu === id ? null : id);
+    setActiveNestedMenu((prev) => (prev === id ? null : id)); // Toggle logic
+  };
+
+  // Recursive function to render menu items
+  const renderMenuItems = (items: PagesStructure[], level: number = 0) => {
+    return items.map((item) => {
+      const hasSubPages = item.subPages && item.subPages.length > 0;
+      const isExternal = item.link && !item.link.startsWith('/');
+
+      return (
+        <div key={item.id} className={`relative group ${level > 0 ? 'border-b border-gray-100' : ''}`}>
+          <div className="flex items-center justify-between group" onClick={(e) => e.stopPropagation()}>
+            {isExternal ? (
+              <Link
+                href={item.link || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`block px-4 py-3 text-gray-700 hover:text-blue-600 capitalize ${level === 0 ? 'md:flex md:items-center md:p-2 md:hover:bg-transparent' : ''}`}
+                onClick={level > 0 ? () => toggleMenu() : undefined}
+              >
+                {item.name}
+              </Link>
+            ) : (
+              <Link
+                href={item.slug}
+                className={`block px-4 py-3 text-gray-700 hover:text-blue-600 capitalize ${level === 0 ? 'md:flex md:items-center md:p-2 md:hover:bg-transparent' : ''}`}
+                onClick={(e) => {
+                  if (level > 0) toggleMenu();
+                  e.stopPropagation(); // Prevent event bubbling
+                }}
+              >
+                {item.name}
+              </Link>
+            )}
+            {hasSubPages && (
+              <button
+                className="px-4 focus:outline-none"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  level === 0 ? toggleSubMenu(item.id) : toggleNestedMenu(item.id);
+                }}
+                aria-label={`Toggle ${item.name} submenu`}
+              >
+                {level === 0 ? (
+                  <RiArrowDownSLine className={`transform transition-transform ${activeSubMenu === item.id ? 'rotate-180' : ''}`} />
+                ) : (
+                  <RiArrowRightSLine className={`transform transition-transform ${activeNestedMenu === item.id ? 'rotate-90' : ''}`} />
+                )}
+              </button>
+            )}
+          </div>
+          {hasSubPages && (
+            <div
+              className={`pl-${level > 0 ? 8 : 4} ${
+                level === 0
+                  ? 'absolute left-0 w-56 rounded-md shadow-lg bg-white py-1 hidden group-hover:block z-20'
+                  : 'bg-gray-50'
+              } ${level === 0 ? 'hidden group-hover:block' : activeSubMenu === item.id || activeNestedMenu === item.id ? 'block' : 'hidden'}`}
+            >
+              {renderMenuItems(item.subPages, level + 1)}
+            </div>
+          )}
+        </div>
+      );
+    });
   };
 
   return (
     <header className={`sticky top-0 z-50 transition-all ${scrolled ? 'bg-white shadow-md animated fadeInDown' : 'bg-transparent'} font-poppins`}>
-      <nav className="container mx-auto px-4 flex flex-wrap items-center justify-between w-full py-4 font-medium">
-        <div className="flex justify-between items-center w-full">
+      <nav className="container mx-auto px-4 flex flex-wrap z-50 items-center justify-between w-full font-medium">
+        
           {/* Logo */}
-          <Link href="/" className="text-2xl text-blue-800">
+          <Link href="/">
             <Image src={logo} alt="logo" width={120} height={40} />
           </Link>
 
           {/* Hamburger Button */}
           <button
-            className="md:hidden text-2xl text-blue-800 focus:outline-none"
+            className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse md:hidden text-2xl text-blue-800"
             onClick={toggleMenu}
             aria-label="Toggle navigation menu"
           >
@@ -71,127 +117,28 @@ export default function NavbarAlt() {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {loading ? (
+          <div className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1">
+            {navData.length > 0 ? (
+              renderMenuItems(navData)
+            ) : (
               <div className="flex justify-center items-center">
                 <Spinner className="h-5 w-5 text-blue-600" />
               </div>
-            ) : (
-              navData.map((link) => (
-                <div key={link.id} className="relative group">
-                  <Link 
-                    href={link.slug || '#'}
-                    className="flex items-center justify-between w-full py-2 px-3 rounded hover:text-blue-600 md:hover:bg-transparent md:border-0 lg:p-0 lg:w-auto capitalize"
-                  >
-                    {link.name}
-                    {link.subLinks.length > 0 && <RiArrowDownSLine className="ml-2" />}
-                  </Link>
-                  {link.subLinks.length > 0 && (
-                    <div className="absolute left-0 w-56 rounded-md shadow-lg bg-white py-1 hidden group-hover:block z-20">
-                      {link.subLinks.map((sublink) => (
-                        <div key={sublink.id} className='relative group/sub'>
-                          <Link 
-                            href={sublink.slug} 
-                            className='flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-blue-600'
-                          >
-                            {sublink.name}
-                            {sublink.nestedLinks.length > 0 && <RiArrowRightSLine className="ml-2" />}
-                          </Link>
-                          {sublink.nestedLinks.length > 0 && (
-                            <div className="absolute top-0 left-full w-56 rounded-md shadow-lg bg-white py-1 hidden group-hover/sub:block z-30">
-                              {sublink.nestedLinks.map((nestedlink) => (
-                                <Link 
-                                  key={nestedlink.id} 
-                                  href={nestedlink.slug}
-                                  className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600"
-                                >
-                                  {nestedlink.name}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))
             )}
           </div>
-        </div>
+        
 
         {/* Mobile Navigation */}
         <div className={`md:hidden w-full ${isOpen ? 'block' : 'hidden'} mt-4 bg-white rounded-lg shadow-lg`}>
-          {loading ? (
+          {navData.length > 0 ? (
+            renderMenuItems(navData)
+          ) : (
             <div className="px-4 py-4 flex items-center">
               <Spinner className="h-5 w-5 text-blue-600" />
             </div>
-          ) : (
-            navData.map((link) => (
-              <div key={link.id} className="border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <Link 
-                    href={link.slug || '#'}
-                    className="block px-4 py-3 text-gray-700 hover:text-blue-600 capitalize"
-                    onClick={() => toggleMenu()}
-                  >
-                    {link.name}
-                  </Link>
-                  {link.subLinks.length > 0 && (
-                    <button
-                      className="px-4 py-3"
-                      onClick={() => toggleSubMenu(link.id)}
-                      aria-label={`Toggle ${link.name} submenu`}
-                    >
-                      <RiArrowDownSLine className={`transform ${activeSubMenu === link.id ? 'rotate-180' : ''}`} />
-                    </button>
-                  )}
-                </div>
-                {link.subLinks.length > 0 && activeSubMenu === link.id && (
-                  <div className="pl-4 bg-gray-50">
-                    {link.subLinks.map((sublink) => (
-                      <div key={sublink.id} className="border-b border-gray-100">
-                        <div className="flex items-center justify-between">
-                          <Link 
-                            href={sublink.slug}
-                            className="block px-4 py-3 text-sm text-gray-600 hover:text-blue-600"
-                            onClick={() => toggleMenu()}
-                          >
-                            {sublink.name}
-                          </Link>
-                          {sublink.nestedLinks.length > 0 && (
-                            <button
-                              className="px-4 py-3"
-                              onClick={() => toggleNestedMenu(sublink.id)}
-                              aria-label={`Toggle ${sublink.name} nested menu`}
-                            >
-                              <RiArrowRightSLine className={`transform ${activeNestedMenu === sublink.id ? 'rotate-90' : ''}`} />
-                            </button>
-                          )}
-                        </div>
-                        {sublink.nestedLinks.length > 0 && activeNestedMenu === sublink.id && (
-                          <div className="pl-8 bg-gray-100">
-                            {sublink.nestedLinks.map((nestedlink) => (
-                              <Link 
-                                key={nestedlink.id}
-                                href={nestedlink.slug}
-                                className="block px-4 py-3 text-sm text-gray-600 hover:text-blue-600"
-                                onClick={() => toggleMenu()}
-                              >
-                                {nestedlink.name}
-                              </Link>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))
           )}
         </div>
       </nav>
     </header>
-  )
+  );
 }

@@ -1,110 +1,160 @@
 import { cache } from "react";
 import { db } from '@/drizzle/db';
-import { navLinks, subLinks, nestedLinks, programs, posts } from '@/drizzle/schema';
+import { pages, posts } from '@/drizzle/schema';
 import { eq, asc } from 'drizzle-orm';
-import type { NavigationStructure, ProgramsStructure } from '@/drizzle/schema';
+import type { Page, PagesStructure, Post } from '@/drizzle/schema';
 
-// Query function to get all navigation data with the same structure
-export const getNavigationData = cache(async (): Promise<NavigationStructure[]> => {
-  const result = await db.query.navLinks.findMany({
-    orderBy: [asc(navLinks.order)],
-    with: {
-      subLinks: {
-        orderBy: [asc(subLinks.order)],
-        with: {
-          nestedLinks: {
-            orderBy: [asc(nestedLinks.order)]
-          }
-        }
+// Helper function to build hierarchical tree from flat pages
+function buildPageTree(flatPages: Page[]): PagesStructure[] {
+  const map = new Map<number, PagesStructure>();
+  flatPages.forEach(page => {
+    map.set(page.id, { ...page, subPages: [] });
+  });
+  
+  const roots: PagesStructure[] = [];
+  flatPages.forEach(page => {
+    if (page.parentId === null) {
+      roots.push(map.get(page.id)!);
+    } else {
+      const parent = map.get(page.parentId);
+      if (parent) {
+        parent.subPages.push(map.get(page.id)!);
       }
     }
   });
 
-  return result;
+  // Recursively sort subPages by order
+  const sortSubPages = (node: PagesStructure) => {
+    node.subPages.sort((a, b) => a.order - b.order);
+    node.subPages.forEach(sortSubPages);
+  };
+  roots.sort((a, b) => a.order - b.order);
+  roots.forEach(sortSubPages);
+
+  return roots;
+}
+
+// Query to get all navigation data (top-level pages with sub-pages)
+export const getNavigationData = cache(async (): Promise<PagesStructure[]> => {
+  const flatPages = await db.query.pages.findMany({
+    orderBy: [asc(pages.order)],
+  });
+  return buildPageTree(flatPages);
 });
 
-// Function to get navigation data for a specific main nav item
-export const getNavItemByName = cache(async (name: string): Promise<NavigationStructure | null> => {
-  const result = await db.query.navLinks.findFirst({
-    where: eq(navLinks.name, name),
-    with: {
-      subLinks: {
-        orderBy: [asc(subLinks.order)],
-        with: {
-          nestedLinks: {
-            orderBy: [asc(nestedLinks.order)]
-          }
-        }
-      }
+// Query to get a page by its name (searches recursively in the hierarchy)
+export const getPageByName = cache(async (name: string): Promise<PagesStructure | null> => {
+  const flatPages = await db.query.pages.findMany();
+  const tree = buildPageTree(flatPages);
+
+  function findInTree(node: PagesStructure, targetName: string): PagesStructure | null {
+    if (node.name === targetName) return node;
+    for (const sub of node.subPages) {
+      const found = findInTree(sub, targetName);
+      if (found) return found;
     }
-  });
+    return null;
+  }
 
-  return result || null;
+  for (const root of tree) {
+    const found = findInTree(root, name);
+    if (found) return found;
+  }
+  return null;
 });
 
-// Function to add a new main navigation item
-export async function addMainNavItem(name: string, slug: string, order: number) {
-  return await db.insert(navLinks).values({
-    name,
-    slug,
-    order
-  }).returning();
+// Query to get a page by its slug (with subPages for hierarchy)
+export const getPageBySlug = cache(async (slug: string): Promise<PagesStructure | null> => {
+  const page = await db.query.pages.findFirst({
+    where: eq(pages.slug, slug),
+    with: {
+      subPages: {
+        with: {
+          subPages: {
+            with: {
+              subPages: true, // Supports up to 4 levels; extend if needed
+            },
+          },
+        },
+      },
+    },
+  });
+  return page || null;
+});
+
+// Function to add a new page (main or sub-page)
+  /*Partial type makes all fields optional. Whereas Page type requires some fields to be mandatory.
+  Use type assertion to ensure that the "data" object conforms to Page type.
+  */
+export async function addPage(data: Partial<Page>) { 
+  return await db.insert(pages).values(data as Page).returning();
 }
 
-// Function to add a sub-link to an existing main nav item
-export async function addSubLink(name: string, slug: string, parentId: number, order: number) {
-  return await db.insert(subLinks).values({
-    name,
-    slug,
-    parentId,
-    order
-  }).returning();
-}
-
-// Function to add a nested link to an existing sub-link
-export async function addNestedLink(name: string, slug: string, parentId: number, order: number) {
-  return await db.insert(nestedLinks).values({
-    name,
-    slug,
-    parentId,
-    order
-  }).returning();
-}
-
-// Query function to get all programs data
-export const getAllPrograms = cache(async (): Promise<ProgramsStructure[]> => {
-  const result = await db.query.programs.findMany({
-    orderBy: [asc(programs.order)],
-    with: { subPrograms: true }
+// Query to get all programs (pages with level not null, built into hierarchy)
+export const getAllPrograms = cache(async (): Promise<PagesStructure[]> => {
+  const flatPrograms = await db.query.pages.findMany({
+    //where: isNotNull(pages.level),
+    orderBy: [asc(pages.order)],
   });
-
-  return result;
+  return buildPageTree(flatPrograms);
 });
 
-// Function to get a program by its slug
-export const getProgramBySlug = cache(async (slug: string): Promise<ProgramsStructure | null> => {
-  const result = await db.query.programs.findFirst({
-    where: eq(programs.slug, slug),
-    with: { subPrograms: true }
-  });
-
-  return result || null;
+// Query to get the full programs structure (under "Programmes" page)
+export const getProgramsStructure = cache(async (): Promise<PagesStructure | null> => {
+  return await getPageByName("Programmes");
 });
 
-// Query function to get all posts data
-export const getAllPosts = cache(async () => {
-  const result = await db.query.posts.findMany({
-    orderBy: [asc(posts.id)]
+// Query to get all posts
+export const getAllPosts = cache(async (): Promise<Post[]> => {
+  return await db.query.posts.findMany({
+    orderBy: [asc(posts.id)],
   });
-
-  return result;
 });
 
-// Query function to get all videos data
-/* export const getAllVideos = cache(async () => {
-  const result = await db.query.videos.findMany({
-    orderBy: [asc(videos.id)]
+// Query to get all videos
+/* export const getAllVideos = cache(async (): Promise<Video[]> => {
+  return await db.query.videos.findMany({
+    orderBy: [asc(videos.id)],
   });
-
-  return result;
 }); */
+
+// Additional useful query: Get sub-pages by parent slug
+export const getSubPagesByParentSlug = cache(async (parentSlug: string): Promise<PagesStructure[]> => {
+  const parent = await db.query.pages.findFirst({
+    where: eq(pages.slug, parentSlug),
+  });
+  if (!parent) return [];
+
+  const subPages = await db.query.pages.findMany({
+    where: eq(pages.parentId, parent.id),
+    orderBy: [asc(pages.order)],
+    with: {
+      subPages: {
+        with: {
+          subPages: true, // Nested up to 3 levels
+        },
+      },
+    },
+  });
+  return subPages;
+});
+
+// Additional useful query: Get page content by slug (flat, without hierarchy)
+export const getPageContentBySlug = cache(async (slug: string): Promise<string | null> => {
+  const page = await db.query.pages.findFirst({
+    where: eq(pages.slug, slug),
+    columns: { content: true },
+  });
+  return page?.content || null;
+});
+
+// Additional useful query: Search pages by keyword in name or content
+export const searchPages = cache(async (keyword: string): Promise<Page[]> => {
+  return await db.query.pages.findMany({
+    where: (pages, { or, like }) => or(
+      like(pages.name, `%${keyword}%`),
+      like(pages.content, `%${keyword}%`)
+    ),
+    orderBy: [asc(pages.order)],
+  });
+});

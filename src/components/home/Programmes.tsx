@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { ProgramsStructure } from '@/drizzle/schema';
+import type { PagesStructure } from '@/drizzle/schema';
 
 export default function Programmes() {
-  const [programmes, setProgrammes] = useState<ProgramsStructure[]>([]);
+  const [programmes, setProgrammes] = useState<PagesStructure[]>([]);
 
   useEffect(() => {
     const fetchProgrammes = async () => {
@@ -31,8 +31,8 @@ export default function Programmes() {
       <div className="container mx-auto px-4">
         {/* Display only parent programmes */}
         <div className="grid gap-4 justify-center sm:grid-cols-2 lg:grid-cols-4">
-          {programmes.filter((p: ProgramsStructure) => !p.parentId).map((programme: ProgramsStructure) => (
-            <Link key={programme.id} href={`/programme/${programme.slug}`} className="flex flex-col group">
+          {programmes.filter((p: PagesStructure) => p.parentId === 2).map((programme: PagesStructure) => (
+            <Link key={programme.id} href={programme.slug} className="flex flex-col group">
               <div className="relative w-full aspect-w-13 aspect-h-12 overflow-hidden">
                 <Image
                   className="w-full h-full object-cover transform group-hover:scale-105 group-focus:scale-105 duration-300"
