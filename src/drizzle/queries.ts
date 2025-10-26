@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { db } from '@/drizzle/db';
 import { pages, posts } from '@/drizzle/schema';
-import { eq, asc } from 'drizzle-orm';
+import { eq, asc, desc } from 'drizzle-orm';
 import type { Page, PagesStructure, Post } from '@/drizzle/schema';
 
 // Helper function to build hierarchical tree from flat pages
@@ -104,20 +104,6 @@ export const getProgramsStructure = cache(async (): Promise<PagesStructure | nul
   return await getPageByName("Programmes");
 });
 
-// Query to get all posts
-export const getAllPosts = cache(async (): Promise<Post[]> => {
-  return await db.query.posts.findMany({
-    orderBy: [asc(posts.id)],
-  });
-});
-
-// Query to get all videos
-/* export const getAllVideos = cache(async (): Promise<Video[]> => {
-  return await db.query.videos.findMany({
-    orderBy: [asc(videos.id)],
-  });
-}); */
-
 // Additional useful query: Get sub-pages by parent slug
 export const getSubPagesByParentSlug = cache(async (parentSlug: string): Promise<PagesStructure[]> => {
   const parent = await db.query.pages.findFirst({
@@ -158,3 +144,25 @@ export const searchPages = cache(async (keyword: string): Promise<Page[]> => {
     orderBy: [asc(pages.order)],
   });
 });
+
+// Query to get all posts
+export const getAllPosts = cache(async (): Promise<Post[]> => {
+  return await db.query.posts.findMany({
+    orderBy: [desc(posts.id)],
+  });
+});
+
+// Query to get a post by its slug
+export const getPostBySlug = cache(async (slug: string): Promise<Post | null> => {
+  const singlePost = await db.query.posts.findFirst({
+    where: eq(posts.slug, slug),
+  });
+  return singlePost || null;
+});
+
+// Query to get all videos
+/* export const getAllVideos = cache(async (): Promise<Video[]> => {
+  return await db.query.videos.findMany({
+    orderBy: [asc(videos.id)],
+  });
+}); */

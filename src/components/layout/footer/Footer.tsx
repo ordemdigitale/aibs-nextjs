@@ -44,7 +44,7 @@ export default function Footer() {
           <div className='col-span-full md:col-span-1'>
             <h3 className="text-xl font-bold mb-4 uppercase">liens rapides</h3>
             <ul className="space-y-2">
-              <li><Link href="#" className="hover:text-blue-400">Actualités</Link></li>
+              <li><Link href="/actualites" className="hover:text-blue-400">Actualités</Link></li>
               <li><Link href="https://promo-ci.youscribe.com/pysci/lp_service_gen?utm_source=youscribe&utm_medium=others&utm_campaign=HP" className="hover:text-blue-400">Bibliothèque numérique</Link></li>
               <li><Link href="https://myschool.atlantique-ibs.net/" className="hover:text-blue-400">E-learning</Link></li>
             </ul>
@@ -54,14 +54,14 @@ export default function Footer() {
           <div className='col-span-full md:col-span-1'>
             <h3 className="text-xl font-bold mb-4 uppercase">à propos de aibs</h3>
             <ul className="space-y-2">
-              <li><Link href="#" className="hover:text-blue-400">Mot du PDG</Link></li>
+              <li><Link href="/mot-du-pdg" className="hover:text-blue-400">Mot du PDG</Link></li>
               <li><Link href="/presentation" className="hover:text-blue-400">Présentation</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Points forts</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Notre politique qualité</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Satisfaction client</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Demande de Document</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Demande de Vacation</Link></li>
-              <li><Link href="#" className="hover:text-blue-400">Demande de Stagiaire</Link></li>
+              <li><Link href="/points-forts" className="hover:text-blue-400">Points forts</Link></li>
+              <li><Link href="/notre-politique-qualite" className="hover:text-blue-400">Notre politique qualité</Link></li>
+              <li><Link href="/satisfaction-client" className="hover:text-blue-400">Satisfaction client</Link></li>
+              <li><Link href="/demande-de-document" className="hover:text-blue-400">Demande de Document</Link></li>
+              <li><Link href="/demande-de-vacation" className="hover:text-blue-400">Demande de Vacation</Link></li>
+              <li><Link href="/demande-de-stagiaire" className="hover:text-blue-400">Demande de Stagiaire</Link></li>
             </ul>
           </div>
         </div>

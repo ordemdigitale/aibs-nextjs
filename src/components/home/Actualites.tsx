@@ -35,7 +35,8 @@ export default function Actualites() {
           <h2 className="text-4xl font-bold font-poppins text-gray-900 uppercase">Actualités de aibs</h2>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {/* slice first 3 posts */}
+          {posts.slice(0, 3).map((post) => (
             <Link
               key={post.id}
               href={post.link ?? "#"}
@@ -57,6 +58,14 @@ export default function Actualites() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="flex justify-center mt-10">
+          <Link
+            href="/actualites"
+            className="text-white bg-blue-700 border-2 border-transparent transition duration-700 ease-in-out hover:bg-white hover:text-blue-700 hover:border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-base px-6 py-5 text-center">
+            Voir plus d'actualités
+          </Link>
         </div>
       </div>
 

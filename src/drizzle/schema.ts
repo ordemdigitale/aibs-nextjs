@@ -41,8 +41,11 @@ export type PagesStructure = Page & {
 export const posts = sqliteTable("posts", {
   id: integer('id').primaryKey({ autoIncrement: true }),
   title: text('title', { length: 255 }).notNull(),
+  slug: text("slug").unique(), // URL path (e.g., "/about", "/posts/visite-entreprise")
+  link: text('link'), // URL to the full post
   thumbnail: text('thumbnail'), // URL or path to image (image on home page)
-  link: text('link').notNull(), // URL to the full post
+  createdAt: text("created_at").default("datetime('now')"),
+  updatedAt: text("updated_at").default("datetime('now')"),
 });
 // TypeScript type for posts
 export type Post = typeof posts.$inferSelect;
