@@ -70,7 +70,11 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
                 className="px-4 focus:outline-none"
                 onClick={(e) => {
                   e.stopPropagation();
-                  level === 0 ? toggleSubMenu(item.id) : toggleNestedMenu(item.id);
+                  if (level === 0) {
+                    toggleSubMenu(item.id);
+                  } else {
+                    toggleNestedMenu(item.id);
+                  }
                 }}
                 aria-label={`Toggle ${item.name} submenu`}
               >

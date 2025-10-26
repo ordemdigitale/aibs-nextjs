@@ -8,7 +8,7 @@ export default function NotFound() {
       <div className="max-w-5xl mx-auto my-10 text-center">
         <h1 className="text-3xl font-bold mb-4">Actualité non trouvée</h1>
         <p className="text-gray-700">
-          Désolé, l'actualité que vous recherchez n'existe pas ou a été supprimée.
+          Désolé, l&apos;actualité que vous recherchez n&apos;existe pas ou a été supprimée.
         </p>
       </div>
       {/* Return to page "Actualités" */}

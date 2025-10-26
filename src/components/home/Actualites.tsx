@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Post } from "@/drizzle/schema";
+import type { Post, Video } from "@/drizzle/schema";
 
 export default function Actualites() {
-  const videoIds = ['y9Fh7cYwj5M', '2qLjhm0cRwA', 'Wfb4rQY3csA', 'sF6E_7dV_cA'];
   // typed posts array to match drizzle Post type
   const [posts, setPosts] = useState<Post[]>([]);
+  const [videos, setVideos] = useState<Video[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -24,6 +24,22 @@ export default function Actualites() {
     };
 
     fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch("/api/videos");
+        if (!response.ok) return;
+        const data: Video[] = await response.json();
+        setVideos(data);
+      } catch (err) {
+        // ignore fetch errors for now
+        console.error("Failed to fetch videos", err);
+      }
+    };
+
+    fetchVideos();
   }, []);
 
   const fallbackThumbnail = "/images/default-thumbnail.jpg"; // ensure this file exists in /public/images or change to a path you have
@@ -64,7 +80,7 @@ export default function Actualites() {
           <Link
             href="/actualites"
             className="text-white bg-blue-700 border-2 border-transparent transition duration-700 ease-in-out hover:bg-white hover:text-blue-700 hover:border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-base px-6 py-5 text-center">
-            Voir plus d'actualités
+            Voir plus d&apos;actualités
           </Link>
         </div>
       </div>
@@ -72,34 +88,40 @@ export default function Actualites() {
       <div className="max-w-full mx-auto px-6 md:px-12 xl:px-6">
 
         <div className="grid grid-cols-2 gap-4">
-        {videoIds.slice(0, 2).map((videoId) => (
-          <div key={videoId} className="aspect-video">
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${videoId}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={`YouTube video ${videoId}`}
-              className="w-full h-full"
-            ></iframe>
+        {videos.slice(0, 2).map((video) => (
+          <div key={video.id}>
+            <div className="aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${video.videoid}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={`YouTube video ${video.videoid}`}
+                className="w-full h-full"
+              ></iframe>
+            </div>
+            <p className="font-medium mt-4 text-center">{video.title}</p>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        {videoIds.slice(2, 4).map((videoId) => (
-          <div key={videoId} className="aspect-video">
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${videoId}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={`YouTube video ${videoId}`}
-              className="w-full h-full"
-            ></iframe>
+      <div className="grid grid-cols-2 gap-4 mt-8">
+        {videos.slice(2, 4).map((video) => (
+          <div key={video.id}>
+            <div className="aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${video.videoid}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={`YouTube video ${video.videoid}`}
+                className="w-full h-full"
+              ></iframe>
+            </div>
+            <p className="font-medium mt-4 text-center">{video.title}</p>
           </div>
         ))}
       </div>

@@ -55,7 +55,6 @@ export const videos = sqliteTable("videos", {
   id: integer('id').primaryKey({ autoIncrement: true }),
   title: text('title', { length: 255 }).notNull(),
   videoid: text('video_id').notNull(), // YT video ID
-  link: text('link').notNull(), // URL to the full post
 });
 // TypeScript type for videos
 export type Video = typeof videos.$inferSelect;
