@@ -28,7 +28,8 @@ export async function updatePostAction(prevState: { success?: boolean; error?: s
 }
 
 export default async function AdminPostEdit({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     redirect('/admin/posts'); // Redirect if post not found

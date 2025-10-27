@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
+import dynamic from 'next/dynamic';
 import { useActionState } from 'react';
 
 type PostFormData = {
@@ -15,6 +14,12 @@ type PostFormData = {
 };
 
 type ActionState = { success?: boolean; error?: string };
+
+// Dynamic import for TiptapEditor with ssr: false
+const TiptapEditor = dynamic(() => import('@/components/admin/TiptapEditor'), {
+  ssr: false,
+  loading: () => <div className="border p-2 rounded bg-gray-100 min-h-[200px] flex items-center justify-center">Loading editor...</div>,
+});
 
 export default function PostEditForm({
   initialData,
@@ -31,37 +36,21 @@ export default function PostEditForm({
   const [editorContent, setEditorContent] = useState(initialData.content || '');
   const [state, formAction, isPending] = useActionState(action, { success: false, error: undefined });
 
-  // Initialize editor with immediatelyRender: false
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: editorContent,
-    onUpdate: ({ editor }) => setEditorContent(editor.getHTML()),
-    immediatelyRender: false,
-    onCreate: ({ editor }) => {
-      console.log('Editor created:', editor); // Debug log
-      editor.commands.setContent(initialData.content || ''); // Set content after creation
-    },
-  });
-
+  // Update form values when initialData changes
   useEffect(() => {
-    console.log('Initial data:', initialData); // Debug log
     setValue('title', initialData.title);
     setValue('slug', initialData.slug || '');
     setValue('thumbnail', initialData.thumbnail || '');
     setValue('link', initialData.link || '');
     setEditorContent(initialData.content || '');
+    console.log('Form updated, editorContent length:', editorContent.length);
+  }, [initialData, setValue]);
 
-    // Update editor content when editor is ready
-    if (editor && !editor.isDestroyed) {
-      console.log('Updating editor content:', initialData.content); // Debug log
-      editor.commands.setContent(initialData.content || '');
-    }
-  }, [initialData, setValue, editor]);
-
-  // Show loading state if editor is not ready
-  if (!editor) {
-    return <div>Loading editor...</div>;
-  }
+  const handleEditorUpdate = (html: string) => {
+    setEditorContent(html);
+    setValue('content', html);
+    console.log('Editor content updated:', html.substring(0, 100) + '...');
+  };
 
   return (
     <div className="container mx-auto p-4 font-poppins">
@@ -98,17 +87,21 @@ export default function PostEditForm({
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Content</label>
-          <EditorContent editor={editor} className="mt-1 border p-2 rounded" />
+          <TiptapEditor content={editorContent} onUpdate={handleEditorUpdate} />
           <input type="hidden" {...register('content')} value={editorContent} />
         </div>
         {state.error && <p className="text-red-600">{state.error}</p>}
-        {state.success && <p className="text-green-600">Post updated successfully!</p>}
+        {state.success && <p className="text-green-600">Post {isEditing ? 'updated' : 'created'} successfully!</p>}
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className={`px-4 py-2 rounded ${
+            isPending
+              ? 'bg-gray-400 text-white cursor-not-allowed'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
           disabled={isPending}
         >
-          {isEditing ? 'Update Post' : 'Create Post'}
+          {isPending ? 'Saving...' : (isEditing ? 'Update Post' : 'Create Post')}
         </button>
       </form>
     </div>
