@@ -49,7 +49,7 @@ export default function PostEditForm({
     setValue('link', initialData.link || '');
     setEditorContent(initialData.content || '');
     console.log('Form updated, editorContent length:', editorContent.length);
-  }, [initialData, setValue]);
+  }, [initialData, setValue, editorContent.length]);
 
   const handleEditorUpdate = (html: string) => {
     setEditorContent(html);
