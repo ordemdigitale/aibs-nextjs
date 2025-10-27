@@ -30,7 +30,12 @@ export default function PostEditForm({
   action: (prevState: ActionState, formData: FormData) => Promise<ActionState>;
   isEditing: boolean;
 }) {
-  const { register, handleSubmit, setValue, watch } = useForm<PostFormData>({
+  const {
+    register,
+  //  handleSubmit,
+    setValue,
+  //  watch
+  } = useForm<PostFormData>({
     defaultValues: initialData,
   });
   const [editorContent, setEditorContent] = useState(initialData.content || '');

@@ -1,7 +1,6 @@
 import React from 'react'
 import { getPostBySlug } from "@/drizzle/queries"
 import { notFound } from 'next/navigation';
-import Image from "next/image";
 
 export default async function PageActualite({ params } : { params: Promise<{ slug: string }>}) {
   const data = await getPostBySlug((await params).slug);

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getPageBySlug } from '@/drizzle/queries';
 import { db, pages } from '@/drizzle/db';
 import type { PagesStructure } from '@/drizzle/schema';
-import Image from 'next/image';
+//import Image from 'next/image';
 import Link from 'next/link';
 import PageHeader from '@/components/layout/PageHeader';
 import { eq } from 'drizzle-orm';
@@ -11,7 +11,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
   const slug = (await params).slug;
   // Normalize slug to match database (remove leading/trailing slashes)
   const fullSlug = `${slug.join('/').replace(/^\/|\/$/g, '')}`; // e.g., "/programmes/bts"
-
   const page = await getPageBySlug(fullSlug);
 
   if (!page) {
@@ -49,8 +48,8 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     if (!subPages || subPages.length === 0) return null;
 
     return (
-      <div className="mt-6 space-y-4">
-        <h2 className="text-xl font-semibold">Sub-Pages</h2>
+      <div className="w-full space-y-4">
+        <h2 className="text-xl font-semibold">Allez aux pages</h2>
         <ul className="list-disc pl-5">
           {subPages.map((subPage) => (
             <li key={subPage.id}>
@@ -69,6 +68,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
     <section className="w-full mx-auto font-poppins">
       {/* Page header */}
       <PageHeader />
+      
       {/* Breadcrumbs */}
       <div className="max-w-5xl mx-auto text-sm font-medium">
         <nav className="flex py-3 text-gray-700">
@@ -91,32 +91,94 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
           </ol>
         </nav>
       </div>
-      {/* Page content */}
-      <div className="max-w-5xl mx-auto my-10 flex flex-wrap justify-between">
 
-        <div className="xl:max-w-[600px] w-full">
+      {/* Page content with additional fields for programs */}
+      {(page.level || page.campus || page.langue || page.rythm || page.duration) ? (
+        <div className="max-w-5xl mx-auto my-10 flex flex-wrap justify-between">
           {/* Left block */}
+          <div className="xl:max-w-[600px] w-full">
+            {page.content && (
+              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
+            )}
+          </div>
+          {/* Right block */}
+          <div className="max-w-[370px] w-full">
+            {/* Additional Fields for Programs */}
+            <aside className="flex flex-col items-center px-3 mb-6">
+              {/* Card info */}
+              <div className="max-w-sm p-6 rounded-lg bg-[#e3ecfa] mb-6">
+                {page.level &&
+                <>
+                <div className="flex justify-between gap-6">
+                  <span className="uppercase font-bold">Niveau</span>
+                  <span>{page.level}</span>
+                </div>
+                <hr className="my-4 border-slate-500 sm:mx-auto lg:my-6" />
+                </>}
+
+                {page.campus &&
+                <>
+                <div className="flex justify-between gap-6">
+                  <span className="uppercase font-bold">Campus</span>
+                  <span>{page.campus}</span>
+                </div>
+                <hr className="my-4 border-slate-500 sm:mx-auto lg:my-6" />
+                </>}
+                
+                {page.langue &&
+                <>
+                <div className="flex justify-between gap-6">
+                  <span className="uppercase font-bold">Langue</span>
+                  <span>{page.langue}</span>
+                </div>
+                <hr className="my-4 border-slate-500 sm:mx-auto lg:my-6" />
+                </>}
+
+                {page.rythm &&
+                <>
+                <div className="flex justify-between gap-6">
+                  <span className="uppercase font-bold">Rythme</span>
+                  <span>{page.rythm}</span>
+                </div>
+                <hr className="my-4 border-slate-500 sm:mx-auto lg:my-6" />
+                </>}
+
+                {page.professionnalisation &&
+                <>
+                <div className="flex justify-between gap-6">
+                  <span className="uppercase font-bold">Professionnalisation</span>
+                  <span>{page.professionnalisation}</span>
+                </div>
+                </>}
+              </div>
+              {/* Card contact */}
+              <div className="max-w-sm p-6 rounded-lg bg-[#e3ecfa] text-center mt-6">
+                <p className="mb-3 font-bold text-xl text-blue-400">Vous avez des questions ?</p>
+                <p className="mb-3 font-bold text-sm text-blue-800 uppercase">Contactez la Direction Commerciale au</p>
+                <hr className="my-4 border-slate-500 sm:mx-auto lg:my-6" />
+                <p className="font-bold text-lg">
+                  <span>(+225) 27 22 44 50 49</span> <br />
+                  <span>(+225) 01 42 27 27 20</span> <br />
+                  <span>(+225) 07 97 76 71 29</span>
+                </p>
+              </div>
+
+              {/* {page.slug === 'bts-gestion-commerciale' && <><span>Des questions sur le BTS Gestion Commerciale ?</span></>} */}
+            </aside>
+          </div>
+          {/* Render nested pages if any */}
+          {renderSubPages(page.subPages)}
+        </div>
+      ) : (
+        /* Full width content */
+        <div className="max-w-5xl mx-auto my-10 flex flex-wrap justify-between">
           {page.content && (
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
           )}
+          {/* Render nested pages if any */}
+          {renderSubPages(page.subPages)}
         </div>
-
-        {/* Additional Fields for Programs */}
-        {(page.level || page.campus || page.langue || page.rythm || page.duration) && (
-          <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-            {page.level && <p><strong>Level:</strong> {page.level}</p>}
-            {page.campus && <p><strong>Campus:</strong> {page.campus}</p>}
-            {page.langue && <p><strong>Language:</strong> {page.langue}</p>}
-            {page.rythm && <p><strong>Rhythm:</strong> {page.rythm}</p>}
-            {page.professionnalisation && <p><strong>Professionalization:</strong> {page.professionnalisation}</p>}
-            {page.internationalisation && <p><strong>Internationalization:</strong> {page.internationalisation}</p>}
-            {page.duration && <p><strong>Duration:</strong> {page.duration}</p>}
-          </div>
-        )}
-
-        {/* Render nested pages if any */}
-        {renderSubPages(page.subPages)}
-      </div>
+      )}
     </section>
   );
 }
