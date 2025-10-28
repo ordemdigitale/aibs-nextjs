@@ -41,7 +41,7 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
       const isExternal = item.link && !item.link.startsWith('/');
 
       return (
-        <div key={item.id} className={`relative group ${level > 0 ? 'border-b border-gray-100' : ''}`}>
+        <div key={item.id} className={`relative group ${level > 0 ? 'border-b border-gray-100' : ''}`}> {/* Remove "${level > 0 ? 'border-b border-gray-100' : ''}" */}
           <div className="flex items-center justify-between group" onClick={(e) => e.stopPropagation()}>
             {isExternal ? (
               <Link
