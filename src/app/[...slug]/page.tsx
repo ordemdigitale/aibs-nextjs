@@ -98,7 +98,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
           {/* Left block */}
           <div className="xl:max-w-[600px] w-full">
             {page.content && (
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
+              <div className="prose" dangerouslySetInnerHTML={{ __html: page.content }} />
             )}
           </div>
           {/* Right block */}
