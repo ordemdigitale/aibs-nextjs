@@ -95,8 +95,11 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
                 className="px-2 focus:outline-none flex items-center text-gray-600 hover:text-blue-600 transition"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (level === 0) toggleSubMenu(item.id);
-                  else toggleNestedMenu(item.id);
+                  // Only toggle submenu on mobile
+                  if (window.innerWidth < 1024) {
+                    if (level === 0) toggleSubMenu(item.id);
+                    else toggleNestedMenu(item.id);
+                  }
                 }}
                 aria-label={`Toggle ${item.name} submenu`}
               >
