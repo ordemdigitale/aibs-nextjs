@@ -89,9 +89,10 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
               </Link>
             )}
 
+            {/* Show arrow on all screens */}
             {hasSubPages && (
               <button
-                className="px-4 focus:outline-none md:hidden"
+                className="px-2 focus:outline-none flex items-center text-gray-600 hover:text-blue-600 transition"
                 onClick={(e) => {
                   e.stopPropagation();
                   if (level === 0) toggleSubMenu(item.id);
@@ -159,7 +160,7 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
         scrolled ? 'bg-white shadow-md animated fadeInDown' : 'bg-transparent'
       } font-poppins`}
     >
-      <nav className="container mx-auto px-4 flex flex-wrap z-50 items-center justify-between w-full">
+      <nav className="container mx-auto px-4 flex flex-wrap z-50 items-center justify-between w-full font-medium">
         {/* Logo */}
         <Link href="/">
           <Image src={logo} alt="logo" width={120} height={40} />
