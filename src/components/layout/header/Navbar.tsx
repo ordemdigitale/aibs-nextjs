@@ -39,9 +39,11 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
     return items.map((item) => {
       const hasSubPages = item.subPages && item.subPages.length > 0;
       const isExternal = item.link && !item.link.startsWith('/');
+      // Check if item has no content and has subPages (non-navigable parent)
+      const isNonNavigable = !item.content && hasSubPages;
 
       return (
-        <div key={item.id} className={`relative group ${level > 0 ? 'border-b border-gray-100' : ''}`}> {/* Remove "${level > 0 ? 'border-b border-gray-100' : ''}" */}
+        <div key={item.id} className={`relative group`}> {/* Remove "${level > 0 ? 'border-b border-gray-100' : ''}" */}
           <div className="flex items-center justify-between group" onClick={(e) => e.stopPropagation()}>
             {isExternal ? (
               <Link
@@ -53,9 +55,14 @@ export default function Navbar({ navData }: { navData: PagesStructure[] }) {
               >
                 {item.name}
               </Link>
+            ) : isNonNavigable ? (
+              // Non-navigable parent: Use span for display only, no link
+              <span className={`block px-4 py-3 text-gray-700 capitalize cursor-pointer ${level === 0 ? 'md:flex md:items-center md:p-2' : ''}`}>
+                {item.name}
+              </span>
             ) : (
               <Link
-                href={item.slug}
+                href={item.slug || "#"}
                 className={`block px-4 py-3 text-gray-700 hover:text-blue-600 capitalize ${level === 0 ? 'md:flex md:items-center md:p-2 md:hover:bg-transparent' : ''}`}
                 onClick={(e) => {
                   if (level > 0) toggleMenu();

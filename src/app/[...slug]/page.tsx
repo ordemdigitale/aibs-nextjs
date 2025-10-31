@@ -44,7 +44,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
   const breadcrumbTrail = await getBreadcrumbTrail();
 
   // Recursive function to render subPages
-  const renderSubPages = (subPages: PagesStructure[]) => {
+/*   const renderSubPages = (subPages: PagesStructure[]) => {
     if (!subPages || subPages.length === 0) return null;
 
     return (
@@ -62,7 +62,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
         </ul>
       </div>
     );
-  };
+  }; */
 
   return (
     <section className="w-full mx-auto font-poppins">
@@ -167,7 +167,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
             </aside>
           </div>
           {/* Render nested pages if any */}
-          {renderSubPages(page.subPages)}
+          {/* {renderSubPages(page.subPages)} */}
         </div>
       ) : (
         /* Full width content */
@@ -176,7 +176,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content }} />
           )}
           {/* Render nested pages if any */}
-          {renderSubPages(page.subPages)}
+          {/* {renderSubPages(page.subPages)} */}
         </div>
       )}
     </section>
