@@ -8,7 +8,7 @@ export default function Jumbotron() {
         {/* Image Section (Left) */}
         <div className="flex flex-col xl:w-8/12">
           <Image
-            src="https://www.atlantique-ibs.net/media/uploads/vignettes/_section_about_img.jpg" // Replace with your image path
+            src="/_section_about_img.jpg" // Replace with your image path
             alt="Graduate"
             className="w-full h-auto object-cover shadow-md"
             width={500}

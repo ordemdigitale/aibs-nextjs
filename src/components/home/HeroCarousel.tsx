@@ -5,38 +5,14 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 const slides = [
-  {
-    id: 1,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/slide-ecole-partenaire-100.jpg',
-  },
-  {
-    id: 2,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/slide%20fag%202025.jpg',
-  },
-  {
-    id: 3,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/slide-ordinateur-offert.jpg',
-  },
-  {
-    id: 4,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/slide_4.jpg',
-  },
-  {
-    id: 5,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/ATLANTIC-GROUP-100.jpg',
-  },
-  {
-    id: 6,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/AFG-HOLDING-100.jpg',
-  },
-  {
-    id: 7,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/FONDATION-ATLANTIC%20GROUP-100.jpg',
-  },
-  {
-    id: 8,
-    image: 'https://atlantique-ibs.net/media/uploads/vignettes/slide-ecole-partenaire-100.jpg',
-  },
+  { id: 1, image: '/slides/slide-ecole-partenaire-100.jpg' },
+  { id: 2, image: '/slides/slide-fag-2025.jpg' },
+  { id: 3, image: '/slides/slide-ordinateur-offert.jpg' },
+  { id: 4, image: '/slides/slide_4.jpg' },
+  { id: 5, image: '/slides/ATLANTIC-GROUP-100.jpg' },
+  { id: 6, image: '/slides/AFG-HOLDING-100.jpg' },
+  { id: 7, image: '/slides/FONDATION-ATLANTIC-GROUP-100.jpg' },
+  { id: 8, image: '/slides/slide-ecole-partenaire-100.jpg' },
 ];
 
 export default function TailwindV4Carousel() {

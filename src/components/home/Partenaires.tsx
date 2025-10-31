@@ -7,14 +7,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function CarouselSlider() {
   const logos = [
-    { id: 1, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/AFG-HOLDING-LOGO.png", alt: "AFG" },
-    { id: 2, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-siteweb10.png", alt: "Banque Atlantique" },
-    { id: 3, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-siteweb3.png", alt: "CNPS" },
-    { id: 4, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-siteweb12.png", alt: "logo" },
-    { id: 5, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-ebs.png", alt: "ebs" },
-    { id: 6, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-supemir.jpeg", alt: "logo" },
-    { id: 7, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-cdp.jpg", alt: "copar" },
-    { id: 8, src: "https://www.atlantique-ibs.net/media/uploads/vignettes/logo-siteweb13.png", alt: "logo" },
+    { id: 1, src: "/partenaires/AFG-HOLDING-LOGO.png", alt: "AFG" },
+    { id: 2, src: "/partenaires/logo-siteweb10.png", alt: "Banque Atlantique" },
+    { id: 3, src: "/partenaires/logo-siteweb3.png", alt: "CNPS" },
+    { id: 4, src: "/partenaires/logo-siteweb12.png", alt: "logo" },
+    { id: 5, src: "/partenaires/logo-ebs.png", alt: "ebs" },
+    { id: 6, src: "/partenaires/logo-supemir.jpeg", alt: "logo" },
+    { id: 7, src: "/partenaires/logo-cdp.jpg", alt: "copar" },
+    { id: 8, src: "/partenaires/logo-siteweb13.png", alt: "logo" },
   ];
 
   const settings = {
