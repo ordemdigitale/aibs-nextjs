@@ -59,3 +59,12 @@ export const videos = sqliteTable("videos", {
 });
 // TypeScript type for videos
 export type Video = typeof videos.$inferSelect;
+
+// --- Partenaires table ---
+export const partenaires = sqliteTable("partenaires", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name"),
+  logo: text("logo"), // URL or path to logo image
+});
+// TypeScript type for partners
+export type TPartners = typeof partenaires.$inferSelect;
