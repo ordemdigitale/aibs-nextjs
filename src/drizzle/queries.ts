@@ -1,8 +1,19 @@
 import { cache } from "react";
 import { db } from '@/drizzle/db';
-import { pages, posts, videos } from '@/drizzle/schema';
+import {
+  pages,
+  posts,
+  videos,
+  partenaires
+} from '@/drizzle/schema';
 import { eq, asc, desc } from 'drizzle-orm';
-import type { Page, PagesStructure, Post, Video } from '@/drizzle/schema';
+import type {
+   Page,
+   PagesStructure,
+   Post,
+   Video,
+   TPartners
+} from '@/drizzle/schema';
 
 // Helper function to build hierarchical tree from flat pages
 function buildPageTree(flatPages: Page[]): PagesStructure[] {
