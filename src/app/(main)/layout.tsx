@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Poppins, Karla, Montserrat } from "next/font/google";
 import { TopBar, NavbarServer } from '@/components/layout/header';
