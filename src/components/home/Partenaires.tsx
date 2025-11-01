@@ -1,21 +1,32 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Slider from 'react-slick';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import type { TPartners } from "@/drizzle/schema";
 
 export default function CarouselSlider() {
-  const logos = [
-    { id: 1, src: "/partenaires/AFG-HOLDING-LOGO.png", alt: "AFG" },
-    { id: 2, src: "/partenaires/logo-siteweb10.png", alt: "Banque Atlantique" },
-    { id: 3, src: "/partenaires/logo-siteweb3.png", alt: "CNPS" },
-    { id: 4, src: "/partenaires/logo-siteweb12.png", alt: "logo" },
-    { id: 5, src: "/partenaires/logo-ebs.png", alt: "ebs" },
-    { id: 6, src: "/partenaires/logo-supemir.jpeg", alt: "logo" },
-    { id: 7, src: "/partenaires/logo-cdp.jpg", alt: "copar" },
-    { id: 8, src: "/partenaires/logo-siteweb13.png", alt: "logo" },
-  ];
+  // typed partenaires array to match drizzle TPartners type
+  const [partenaires, setPartenaires] = useState<TPartners[]>([]);
+
+  useEffect(() => {
+    const fetchPartenaires = async () => {
+      try {
+        const response = await fetch("/api/partenaires");
+        if (!response.ok) return;
+        const data: TPartners[] = await response.json();
+        setPartenaires(data);
+        console.log("Fetched partenaires: ", data);
+      } catch (err) {
+        // ignore fetch errors for now
+        console.error("Failed to fetch partenaires", err);
+      }
+    };
+
+    fetchPartenaires();
+  }, []);
 
   const settings = {
     dots: false,
@@ -42,11 +53,11 @@ export default function CarouselSlider() {
     
         <div className="overflow-hidden">
           <Slider {...settings}>
-            {logos.map((logo) => (
-              <div key={logo.id} className="flex-shrink-0 w-80 mx-2">
+            {partenaires.map((partenaire) => (
+              <div key={partenaire.id} className="flex-shrink-0 w-80 mx-2">
                 <Image
-                  src={logo.src}
-                  alt={logo.alt}
+                  src={partenaire.logo || ""}
+                  alt={partenaire.name || "logo partenaire"}
                   className="w-full h-36 object-contain p-2"
                   width={100}
                   height={100}
