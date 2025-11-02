@@ -1,7 +1,11 @@
-import React from 'react'
+// Page to list "Partenaires" in the admin panel
+import React from "react"
+import { getAllPartenaires } from "@/drizzle/partenairesQueries"
 
-export default function PartenairePage() {
+export default async function PartenairePage() {
+  const partenaires = await getAllPartenaires();
+
   return (
-    <div>PartenairePage</div>
+    <section>PartenairePage</section>
   )
 }
